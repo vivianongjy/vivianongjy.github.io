@@ -159,16 +159,28 @@ function musicEmbed(value) {
 }
 function renderPageMusic(content) {
   document.getElementById('page-music')?.remove();
+  document.getElementById('page-music-style')?.remove();
   const embed = musicEmbed(content.text?.['music-url']);
   if (!embed) return;
-  const main = document.querySelector('main'); if (!main) return;
-  const section = document.createElement('section'); section.id = 'page-music'; section.setAttribute('aria-labelledby','page-music-heading');
-  const heading = document.createElement('h2'); heading.id = 'page-music-heading'; heading.textContent = content.text?.['music-title']?.trim() || 'A song for this chapter';
-  const note = document.createElement('p'); note.textContent = 'A little soundtrack to this page. Press play and stay a while.';
-  const frame = document.createElement('iframe'); frame.src = embed.src; frame.title = heading.textContent + ' — ' + embed.provider; frame.loading = 'lazy'; frame.allow = 'encrypted-media; fullscreen; picture-in-picture'; frame.allowFullscreen = true; frame.referrerPolicy = 'strict-origin-when-cross-origin'; frame.height = embed.provider === 'Spotify' ? '152' : '260';
-  const link = document.createElement('a'); link.href = embed.link; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = 'Listen on ' + embed.provider + ' ↗';
-  section.append(heading,note,frame,link); main.append(section);
-  if (!document.getElementById('page-music-style')) {
-    const style = document.createElement('style'); style.id = 'page-music-style'; style.textContent = '#page-music{margin:36px 0 56px;padding:28px;border:1px solid var(--line,#d9d3be);border-radius:12px 30px 12px 30px;background:var(--panel-cream,#fff9ed8c)}#page-music h2{font-size:28px;margin:0 0 12px;overflow-wrap:anywhere}#page-music p{line-height:1.6;color:var(--muted,#596b5e)}#page-music iframe{display:block;width:100%;max-width:620px;border:0;border-radius:12px;margin:18px 0}#page-music a{font-size:13px}@media(max-width:620px){#page-music{padding:20px}}'; document.head.append(style);
+  const header = document.querySelector('header'); if (!header) return;
+  const section = document.createElement('div'); section.id = 'page-music';
+  const button = document.createElement('button'); button.type = 'button'; button.className = 'music-toggle'; button.textContent = '▶ Music'; button.setAttribute('aria-expanded','false'); button.setAttribute('aria-controls','music-mini-player');
+  const panel = document.createElement('div'); panel.id = 'music-mini-player'; panel.hidden = true; panel.setAttribute('role','region');
+  const title = content.text?.['music-title']?.trim() || 'A song for this chapter'; panel.setAttribute('aria-label',title); button.title = title;
+  const heading = document.createElement('p'); heading.className = 'music-mini-title'; heading.textContent = title;
+  const close = document.createElement('button'); close.type = 'button'; close.className = 'music-mini-close'; close.textContent = 'Close ×';
+  const link = document.createElement('a'); link.href = embed.link; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = 'Open in ' + embed.provider + ' ↗';
+  panel.append(heading,close,link); section.append(button,panel); header.after(section);
+  let frame;
+  function setOpen(open) {
+    panel.hidden = !open; button.setAttribute('aria-expanded',String(open)); button.textContent = open ? '♫ Music' : '▶ Music';
+    if (open && !frame) {
+      frame = document.createElement('iframe'); frame.src = embed.src; frame.title = title + ' — ' + embed.provider; frame.allow = 'encrypted-media; fullscreen; picture-in-picture'; frame.allowFullscreen = true; frame.referrerPolicy = 'strict-origin-when-cross-origin'; frame.height = embed.provider === 'Spotify' ? '152' : '200'; panel.insertBefore(frame,link);
+    }
   }
+  button.onclick = () => setOpen(panel.hidden);
+  close.onclick = () => { setOpen(false); button.focus(); };
+  section.addEventListener('keydown',event => { if(event.key === 'Escape') { setOpen(false); button.focus(); } });
+  const style = document.createElement('style'); style.id = 'page-music-style';
+  style.textContent = '#page-music{box-sizing:border-box;position:relative;z-index:4;max-width:1280px;padding:0 64px;margin:-8px auto 12px;display:flex;justify-content:flex-end}.music-toggle{font:13px/1.2 inherit;color:#315d43;background:#fff9edd9;border:1px solid #b9c7ab;border-radius:24px;padding:10px 15px;min-height:40px;cursor:pointer;box-shadow:0 2px 8px #304a3510}.music-toggle:focus-visible,.music-mini-close:focus-visible{outline:3px solid #315d43;outline-offset:3px}#music-mini-player{box-sizing:border-box;position:absolute;right:64px;top:48px;width:340px;max-width:calc(100vw - 40px);padding:16px;background:#fff9ed;border:1px solid #bcc9af;border-radius:16px;box-shadow:0 10px 35px #304a3533}#music-mini-player[hidden]{display:none}.music-mini-title{font:16px/1.5 Georgia,serif;color:#315d43;margin:0 55px 16px 0;overflow-wrap:anywhere}.music-mini-close{position:absolute;right:12px;top:12px;border:0;background:none;color:#315d43;font-size:12px;cursor:pointer}#music-mini-player iframe{display:block;border:0;border-radius:10px;width:100%;margin:0 0 12px}#music-mini-player a{font-size:12px;color:#315d43}@media(max-width:900px){#page-music{padding:0 28px}#music-mini-player{right:28px}}'; document.head.append(style);
 }
