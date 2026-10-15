@@ -2,6 +2,8 @@
   "opacity": 55,
   "background": "/friends-background.png",
   "text": {
-    "intro": "Adventures, catch-ups, and memories made together."
+    "intro": "Adventures, catch-ups, and memories made together.",
+    "music-url": "https://open.spotify.com/album/2G6b8wax6wLnR6zMixJCfA?si=lCvN4UA-QnitkYaSXoRnYQ",
+    "music-title": "A song for this chapter"
   }
 }
