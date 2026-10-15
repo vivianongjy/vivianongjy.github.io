@@ -220,6 +220,18 @@
               "name": "what-i-do",
               "label": "What I do",
               "type": "string"
+            },
+            {
+              "name": "music-url",
+              "label": "Song link (Spotify track or YouTube video; blank hides player)",
+              "type": "string",
+              "default": ""
+            },
+            {
+              "name": "music-title",
+              "label": "Music heading (optional)",
+              "type": "string",
+              "default": "A song for this chapter"
             }
           ]
         },
@@ -413,6 +425,18 @@
               "name": "life-university",
               "label": "university introduction",
               "type": "text"
+            },
+            {
+              "name": "music-url",
+              "label": "Song link (Spotify track or YouTube video; blank hides player)",
+              "type": "string",
+              "default": ""
+            },
+            {
+              "name": "music-title",
+              "label": "Music heading (optional)",
+              "type": "string",
+              "default": "A song for this chapter"
             }
           ]
         }
@@ -469,6 +493,18 @@
               "name": "story-copy",
               "label": "Story introduction",
               "type": "text"
+            },
+            {
+              "name": "music-url",
+              "label": "Song link (Spotify track or YouTube video; blank hides player)",
+              "type": "string",
+              "default": ""
+            },
+            {
+              "name": "music-title",
+              "label": "Music heading (optional)",
+              "type": "string",
+              "default": "A song for this chapter"
             }
           ]
         }
@@ -515,6 +551,18 @@
               "name": "intro",
               "label": "Page introduction",
               "type": "text"
+            },
+            {
+              "name": "music-url",
+              "label": "Song link (Spotify track or YouTube video; blank hides player)",
+              "type": "string",
+              "default": ""
+            },
+            {
+              "name": "music-title",
+              "label": "Music heading (optional)",
+              "type": "string",
+              "default": "A song for this chapter"
             }
           ]
         }
@@ -676,6 +724,18 @@
               "name": "career-copy-7",
               "label": "Timeline 7 description",
               "type": "text"
+            },
+            {
+              "name": "music-url",
+              "label": "Song link (Spotify track or YouTube video; blank hides player)",
+              "type": "string",
+              "default": ""
+            },
+            {
+              "name": "music-title",
+              "label": "Music heading (optional)",
+              "type": "string",
+              "default": "A song for this chapter"
             }
           ]
         }

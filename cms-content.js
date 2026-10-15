@@ -5,8 +5,11 @@
     const response = await fetch('/' + page + '-content.json', { cache: 'no-store' });
     if (!response.ok) throw new Error('Unable to load page content');
     const content = await response.json();
+    renderPageMusic(content);
+    if (page === 'personal') renderLifeStagePhotos(content);
     if (page === 'home') renderHomePortrait(content);
     if (page === 'home') renderMeetVersions(content);
+
     for (const node of document.querySelectorAll('[data-setting]')) {
       const text = content.text?.[node.dataset.setting];
       if (typeof text === 'string') node.textContent = text;
@@ -28,6 +31,34 @@
   }
 })();
 
+function renderLifeStagePhotos(content) {
+  const stages = { toddler: 'Toddler', kindergarten: 'Kindergarten', primary: 'Primary / Elementary School', 'high-school': 'High School', college: 'College', university: 'University' };
+  const style = document.createElement('style');
+  style.id = 'life-stage-photo-styles';
+  style.textContent = '.life-stage-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:0 0 24px}.life-stage-photos a{display:block;min-width:0;padding:9px;background:rgb(255 250 240 / var(--panel-alpha,.55));border:1px solid #d9d3be;border-radius:5px}.life-stage-photos img{width:100%;height:auto;max-height:480px;aspect-ratio:4/3;object-fit:contain;display:block;background:#e3e9d54d;border-radius:2px}.life-stage-photos a:only-child{max-width:650px;grid-column:1/-1}.life-stage-photos a:focus-visible{outline:3px solid #b88636;outline-offset:4px}@media(max-width:620px){.life-stage-photos{grid-template-columns:1fr;gap:12px}}';
+  document.getElementById('life-stage-photo-styles')?.remove();
+  document.head.append(style);
+  for (const [stage, label] of Object.entries(stages)) {
+    const section = document.getElementById('life-' + stage);
+    if (!section) continue;
+    section.querySelector('.life-stage-photos')?.remove();
+    const selected = content.stagePhotos?.[stage];
+    const photos = Array.isArray(selected) ? selected : typeof selected === 'string' && selected ? [selected] : [];
+    const gallery = document.createElement('div'); gallery.className = 'life-stage-photos';
+    gallery.setAttribute('role', 'group'); gallery.setAttribute('aria-label', label + ' photographs');
+    for (const [index, photo] of photos.entries()) {
+      if (typeof photo !== 'string' || !photo.trim()) continue;
+      let url; try { url = new URL(photo, window.location.origin); } catch { continue; }
+      if (!['http:', 'https:'].includes(url.protocol)) continue;
+      const link = document.createElement('a'); link.href = url.href; link.target = '_blank'; link.rel = 'noopener noreferrer';
+      link.setAttribute('aria-label', 'Open ' + label + ' photo ' + (index + 1));
+      const image = document.createElement('img'); image.src = url.href; image.alt = label + ' memory, photo ' + (index + 1); image.loading = 'lazy'; image.decoding = 'async';
+      link.append(image); gallery.append(link);
+    }
+    if (gallery.children.length) section.querySelector('[data-life-stage]')?.before(gallery);
+  }
+}
+
 function renderHomePortrait(content) {
   const about = document.querySelector('#about');
   if (!about) return;
@@ -48,6 +79,24 @@ function renderHomePortrait(content) {
   if (!document.getElementById('about-portrait-style')) {
     const style = document.createElement('style'); style.id = 'about-portrait-style';
     style.textContent = '.about-portrait{max-width:260px;margin:28px 0 0;padding:10px;background:rgb(255 250 240 / var(--panel-alpha,.55));border:1px solid #d9d3be;border-radius:4px;box-shadow:2px 5px 18px #314b3512}.about-portrait img{display:block;width:100%;height:auto;max-height:none;object-fit:contain;border-radius:2px}.about-portrait-column{min-width:0}@media(max-width:620px){.about-portrait{max-width:240px;margin-top:24px}}';
+    document.head.append(style);
+  }
+}
+
+function renderHeroPortrait(content) {
+  const visual = document.querySelector('.hero .visual');
+  if (!visual) return;
+  visual.querySelector('.hero-portrait')?.remove();
+  const source = content.heroPortrait || content.portrait;
+  if (typeof source !== 'string' || !source.trim()) return;
+  let url; try { url = new URL(source, location.origin); } catch { return; }
+  if (!['http:', 'https:'].includes(url.protocol)) return;
+  const figure = document.createElement('figure'); figure.className = 'hero-portrait';
+  const image = document.createElement('img'); image.src = url.href; image.alt = content.heroPortraitAlt || content.portraitAlt || 'Vivian Ong'; image.decoding = 'async'; image.fetchPriority = 'high'; image.width = 220; image.height = 220;
+  figure.append(image); visual.prepend(figure); visual.removeAttribute('role'); visual.removeAttribute('aria-label');
+  if (!document.getElementById('hero-portrait-style')) {
+    const style = document.createElement('style'); style.id = 'hero-portrait-style';
+    style.textContent = '.hero .hero-portrait{position:absolute;left:-18px;top:100px;width:220px;height:220px;aspect-ratio:1;margin:0;overflow:hidden;border:6px solid #fff9e8;border-radius:50%;background:#e3e9d5;box-shadow:0 8px 28px #304a3526;z-index:1}.hero .hero-portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 35%;border-radius:50%}@media(max-width:900px){.hero .hero-portrait{left:0;top:110px;width:180px;height:180px}}@media(max-width:620px){.hero .visual:has(.hero-portrait){height:420px}.hero .hero-portrait{left:12px;top:95px;width:170px;height:170px}}';
     document.head.append(style);
   }
 }
@@ -89,5 +138,37 @@ function renderMeetVersions(content) {
     const style = document.createElement('style'); style.id = 'meet-versions-style';
     style.textContent = '.hero .visual:has(.meet-versions){height:560px;display:block;width:100%;max-width:none}.hero .visual:has(.meet-versions):before{display:none}.meet-versions{position:relative;z-index:1;padding:12px 8px}.meet-versions h2{font:28px/1.2 Caveat,cursive;letter-spacing:0;text-align:center;margin:0 auto 22px;max-width:360px}.meet-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px;max-width:330px;margin:auto}.meet-version{font:13px/1.4 inherit;color:#2f493c;background:none;border:0;padding:0;cursor:pointer;display:flex;align-items:center;flex-direction:column;gap:9px;overflow-wrap:anywhere}.meet-circle{width:112px;height:112px;border-radius:50%;border:5px solid #fff9e8;background:#e0e8d7;box-shadow:0 6px 20px #304a3526;overflow:hidden;display:grid;place-items:center;font:32px Georgia,serif;transition:transform .2s}.meet-circle img{width:100%;height:100%;object-fit:cover;display:block}.meet-version:hover .meet-circle{transform:translateY(-3px)}.meet-version:focus-visible{outline:3px solid #315d43;outline-offset:5px;border-radius:8px}.visual:has(.meet-versions) .travel-note{position:absolute;bottom:0;right:0}#meet-version-dialog{box-sizing:border-box;width:min(460px,90vw);max-height:85dvh;overflow:auto;background:#fff9ed;color:#2f493c;border:1px solid #b9c7ab;border-radius:20px;padding:26px;box-shadow:0 20px 80px #20352455}#meet-version-dialog::backdrop{background:#20352488}#meet-version-dialog h2{font-size:28px;margin:18px 0}.meet-close{display:block;margin-left:auto;border:1px solid #9eaf93;background:#edf2e4;border-radius:20px;padding:8px 14px;cursor:pointer;color:inherit}.meet-full-photo{display:block;max-width:100%;max-height:300px;width:auto;height:auto;margin:auto;object-fit:contain;border-radius:8px}.meet-full-photo[hidden]{display:none}.meet-message{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7}@media(max-width:620px){.hero .visual:has(.meet-versions){height:580px}.meet-versions{padding:0}.meet-versions h2{font-size:26px}.meet-circle{width:106px;height:106px}}';
     document.head.append(style);
+  }
+}
+
+// Accept song links, never user-supplied iframe HTML.
+function musicEmbed(value) {
+  if (typeof value !== 'string' || !value.trim()) return null;
+  let url; try { url = new URL(value.trim()); } catch { return null; }
+  if (url.protocol !== 'https:' || url.username || url.password) return null;
+  if (url.hostname === 'open.spotify.com') {
+    const match = url.pathname.match(/^\/(?:intl-[a-z]+\/)?(?:embed\/)?track\/([A-Za-z0-9]{22})\/?$/);
+    return match ? { src: 'https://open.spotify.com/embed/track/' + match[1], provider: 'Spotify', link: 'https://open.spotify.com/track/' + match[1] } : null;
+  }
+  let id;
+  if (url.hostname === 'youtu.be') id = url.pathname.slice(1);
+  else if (['youtube.com','www.youtube.com','m.youtube.com','www.youtube-nocookie.com'].includes(url.hostname)) {
+    id = url.pathname === '/watch' ? url.searchParams.get('v') : url.pathname.match(/^\/(?:embed|shorts)\/([^/]+)\/?$/)?.[1];
+  }
+  return /^[A-Za-z0-9_-]{11}$/.test(id || '') ? { src: 'https://www.youtube-nocookie.com/embed/' + id, provider: 'YouTube', link: 'https://www.youtube.com/watch?v=' + id } : null;
+}
+function renderPageMusic(content) {
+  document.getElementById('page-music')?.remove();
+  const embed = musicEmbed(content.text?.['music-url']);
+  if (!embed) return;
+  const main = document.querySelector('main'); if (!main) return;
+  const section = document.createElement('section'); section.id = 'page-music'; section.setAttribute('aria-labelledby','page-music-heading');
+  const heading = document.createElement('h2'); heading.id = 'page-music-heading'; heading.textContent = content.text?.['music-title']?.trim() || 'A song for this chapter';
+  const note = document.createElement('p'); note.textContent = 'A little soundtrack to this page. Press play and stay a while.';
+  const frame = document.createElement('iframe'); frame.src = embed.src; frame.title = heading.textContent + ' — ' + embed.provider; frame.loading = 'lazy'; frame.allow = 'encrypted-media; fullscreen; picture-in-picture'; frame.allowFullscreen = true; frame.referrerPolicy = 'strict-origin-when-cross-origin'; frame.height = embed.provider === 'Spotify' ? '152' : '260';
+  const link = document.createElement('a'); link.href = embed.link; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = 'Listen on ' + embed.provider + ' ↗';
+  section.append(heading,note,frame,link); main.append(section);
+  if (!document.getElementById('page-music-style')) {
+    const style = document.createElement('style'); style.id = 'page-music-style'; style.textContent = '#page-music{margin:36px 0 56px;padding:28px;border:1px solid var(--line,#d9d3be);border-radius:12px 30px 12px 30px;background:var(--panel-cream,#fff9ed8c)}#page-music h2{font-size:28px;margin:0 0 12px;overflow-wrap:anywhere}#page-music p{line-height:1.6;color:var(--muted,#596b5e)}#page-music iframe{display:block;width:100%;max-width:620px;border:0;border-radius:12px;margin:18px 0}#page-music a{font-size:13px}@media(max-width:620px){#page-music{padding:20px}}'; document.head.append(style);
   }
 }
