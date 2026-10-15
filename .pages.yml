@@ -1,0 +1,573 @@
+{
+  "media": {
+    "input": "uploads",
+    "output": "/uploads",
+    "extensions": [
+      "jpg",
+      "jpeg",
+      "png",
+      "webp"
+    ],
+    "rename": "safe"
+  },
+  "settings": {
+    "content": {
+      "merge": true
+    }
+  },
+  "content": [
+    {
+      "name": "posts",
+      "label": "Posts & photos",
+      "type": "file",
+      "path": "posts.json",
+      "format": "json",
+      "list": true,
+      "fields": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "hidden": true
+        },
+        {
+          "name": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "category",
+          "label": "Section",
+          "type": "select",
+          "required": true,
+          "default": "personal",
+          "options": {
+            "values": [
+              {
+                "name": "personal",
+                "label": "Personal"
+              },
+              {
+                "name": "family",
+                "label": "Family"
+              },
+              {
+                "name": "friends",
+                "label": "Friends"
+              },
+              {
+                "name": "career",
+                "label": "Career"
+              }
+            ]
+          }
+        },
+        {
+          "name": "lifeStage",
+          "label": "Life stage",
+          "description": "Used only for Personal posts. Leave General journal for other sections.",
+          "type": "select",
+          "options": {
+            "values": [
+              {
+                "name": "",
+                "label": "General journal / not applicable"
+              },
+              {
+                "name": "toddler",
+                "label": "Toddler"
+              },
+              {
+                "name": "kindergarten",
+                "label": "Kindergarten"
+              },
+              {
+                "name": "primary",
+                "label": "Primary / Elementary School"
+              },
+              {
+                "name": "high-school",
+                "label": "High School"
+              },
+              {
+                "name": "college",
+                "label": "College"
+              },
+              {
+                "name": "university",
+                "label": "University"
+              }
+            ]
+          }
+        },
+        {
+          "name": "date",
+          "label": "Date",
+          "type": "date",
+          "required": true,
+          "options": {
+            "format": "yyyy-MM-dd"
+          }
+        },
+        {
+          "name": "location",
+          "label": "Location",
+          "type": "string"
+        },
+        {
+          "name": "caption",
+          "label": "Caption / story",
+          "type": "text"
+        },
+        {
+          "name": "images",
+          "label": "Photos",
+          "type": "image",
+          "options": {
+            "extensions": [
+              "jpg",
+              "jpeg",
+              "png",
+              "webp"
+            ],
+            "rename": "safe",
+            "multiple": {
+              "max": 6
+            },
+            "unique": true
+          }
+        },
+        {
+          "name": "createdAt",
+          "type": "string",
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "home",
+      "label": "Home page",
+      "type": "file",
+      "path": "home-content.json",
+      "format": "json",
+      "fields": [
+        {
+          "name": "opacity",
+          "label": "Panel opacity (%)",
+          "description": "55 matches the current design. Lower numbers make panels more translucent.",
+          "type": "number",
+          "required": true,
+          "options": {
+            "min": 15,
+            "max": 100
+          }
+        },
+        {
+          "name": "background",
+          "label": "Page background",
+          "type": "image",
+          "options": {
+            "extensions": [
+              "jpg",
+              "jpeg",
+              "png",
+              "webp"
+            ],
+            "rename": "safe"
+          }
+        },
+        {
+          "name": "text",
+          "label": "Page text",
+          "type": "object",
+          "fields": [
+            {
+              "name": "intro",
+              "label": "Page introduction",
+              "type": "text"
+            },
+            {
+              "name": "about",
+              "label": "About me",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "personal",
+      "label": "Personal page",
+      "type": "file",
+      "path": "personal-content.json",
+      "format": "json",
+      "fields": [
+        {
+          "name": "opacity",
+          "label": "Panel opacity (%)",
+          "description": "55 matches the current design. Lower numbers make panels more translucent.",
+          "type": "number",
+          "required": true,
+          "options": {
+            "min": 15,
+            "max": 100
+          }
+        },
+        {
+          "name": "background",
+          "label": "Page background",
+          "type": "image",
+          "options": {
+            "extensions": [
+              "jpg",
+              "jpeg",
+              "png",
+              "webp"
+            ],
+            "rename": "safe"
+          }
+        },
+        {
+          "name": "text",
+          "label": "Page text",
+          "type": "object",
+          "fields": [
+            {
+              "name": "intro",
+              "label": "Page introduction",
+              "type": "text"
+            },
+            {
+              "name": "interests-intro",
+              "label": "Interests introduction",
+              "type": "text"
+            },
+            {
+              "name": "interest-title-1",
+              "label": "Interest 1 title",
+              "type": "string"
+            },
+            {
+              "name": "interest-copy-1",
+              "label": "Interest 1 description",
+              "type": "text"
+            },
+            {
+              "name": "interest-title-2",
+              "label": "Interest 2 title",
+              "type": "string"
+            },
+            {
+              "name": "interest-copy-2",
+              "label": "Interest 2 description",
+              "type": "text"
+            },
+            {
+              "name": "interest-title-3",
+              "label": "Interest 3 title",
+              "type": "string"
+            },
+            {
+              "name": "interest-copy-3",
+              "label": "Interest 3 description",
+              "type": "text"
+            },
+            {
+              "name": "life-toddler",
+              "label": "toddler introduction",
+              "type": "text"
+            },
+            {
+              "name": "life-kindergarten",
+              "label": "kindergarten introduction",
+              "type": "text"
+            },
+            {
+              "name": "life-primary",
+              "label": "primary introduction",
+              "type": "text"
+            },
+            {
+              "name": "life-high-school",
+              "label": "high school introduction",
+              "type": "text"
+            },
+            {
+              "name": "life-college",
+              "label": "college introduction",
+              "type": "text"
+            },
+            {
+              "name": "life-university",
+              "label": "university introduction",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "family",
+      "label": "Family page",
+      "type": "file",
+      "path": "family-content.json",
+      "format": "json",
+      "fields": [
+        {
+          "name": "opacity",
+          "label": "Panel opacity (%)",
+          "description": "55 matches the current design. Lower numbers make panels more translucent.",
+          "type": "number",
+          "required": true,
+          "options": {
+            "min": 15,
+            "max": 100
+          }
+        },
+        {
+          "name": "background",
+          "label": "Page background",
+          "type": "image",
+          "options": {
+            "extensions": [
+              "jpg",
+              "jpeg",
+              "png",
+              "webp"
+            ],
+            "rename": "safe"
+          }
+        },
+        {
+          "name": "text",
+          "label": "Page text",
+          "type": "object",
+          "fields": [
+            {
+              "name": "intro",
+              "label": "Page introduction",
+              "type": "text"
+            },
+            {
+              "name": "story-title",
+              "label": "Story heading",
+              "type": "string"
+            },
+            {
+              "name": "story-copy",
+              "label": "Story introduction",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "friends",
+      "label": "Friends page",
+      "type": "file",
+      "path": "friends-content.json",
+      "format": "json",
+      "fields": [
+        {
+          "name": "opacity",
+          "label": "Panel opacity (%)",
+          "description": "55 matches the current design. Lower numbers make panels more translucent.",
+          "type": "number",
+          "required": true,
+          "options": {
+            "min": 15,
+            "max": 100
+          }
+        },
+        {
+          "name": "background",
+          "label": "Page background",
+          "type": "image",
+          "options": {
+            "extensions": [
+              "jpg",
+              "jpeg",
+              "png",
+              "webp"
+            ],
+            "rename": "safe"
+          }
+        },
+        {
+          "name": "text",
+          "label": "Page text",
+          "type": "object",
+          "fields": [
+            {
+              "name": "intro",
+              "label": "Page introduction",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "career",
+      "label": "Career page",
+      "type": "file",
+      "path": "career-content.json",
+      "format": "json",
+      "fields": [
+        {
+          "name": "opacity",
+          "label": "Panel opacity (%)",
+          "description": "55 matches the current design. Lower numbers make panels more translucent.",
+          "type": "number",
+          "required": true,
+          "options": {
+            "min": 15,
+            "max": 100
+          }
+        },
+        {
+          "name": "background",
+          "label": "Page background",
+          "type": "image",
+          "options": {
+            "extensions": [
+              "jpg",
+              "jpeg",
+              "png",
+              "webp"
+            ],
+            "rename": "safe"
+          }
+        },
+        {
+          "name": "text",
+          "label": "Page text",
+          "type": "object",
+          "fields": [
+            {
+              "name": "intro",
+              "label": "Page introduction",
+              "type": "text"
+            },
+            {
+              "name": "story-title",
+              "label": "Story heading",
+              "type": "string"
+            },
+            {
+              "name": "story-copy",
+              "label": "Story introduction",
+              "type": "text"
+            },
+            {
+              "name": "career-when-1",
+              "label": "Timeline 1 age / period",
+              "type": "string"
+            },
+            {
+              "name": "career-title-1",
+              "label": "Timeline 1 role",
+              "type": "string"
+            },
+            {
+              "name": "career-copy-1",
+              "label": "Timeline 1 description",
+              "type": "text"
+            },
+            {
+              "name": "career-when-2",
+              "label": "Timeline 2 age / period",
+              "type": "string"
+            },
+            {
+              "name": "career-title-2",
+              "label": "Timeline 2 role",
+              "type": "string"
+            },
+            {
+              "name": "career-copy-2",
+              "label": "Timeline 2 description",
+              "type": "text"
+            },
+            {
+              "name": "career-when-3",
+              "label": "Timeline 3 age / period",
+              "type": "string"
+            },
+            {
+              "name": "career-title-3",
+              "label": "Timeline 3 role",
+              "type": "string"
+            },
+            {
+              "name": "career-copy-3",
+              "label": "Timeline 3 description",
+              "type": "text"
+            },
+            {
+              "name": "career-when-4",
+              "label": "Timeline 4 age / period",
+              "type": "string"
+            },
+            {
+              "name": "career-title-4",
+              "label": "Timeline 4 role",
+              "type": "string"
+            },
+            {
+              "name": "career-copy-4",
+              "label": "Timeline 4 description",
+              "type": "text"
+            },
+            {
+              "name": "career-when-5",
+              "label": "Timeline 5 age / period",
+              "type": "string"
+            },
+            {
+              "name": "career-title-5",
+              "label": "Timeline 5 role",
+              "type": "string"
+            },
+            {
+              "name": "career-copy-5",
+              "label": "Timeline 5 description",
+              "type": "text"
+            },
+            {
+              "name": "career-when-6",
+              "label": "Timeline 6 age / period",
+              "type": "string"
+            },
+            {
+              "name": "career-title-6",
+              "label": "Timeline 6 role",
+              "type": "string"
+            },
+            {
+              "name": "career-copy-6",
+              "label": "Timeline 6 description",
+              "type": "text"
+            },
+            {
+              "name": "career-when-7",
+              "label": "Timeline 7 age / period",
+              "type": "string"
+            },
+            {
+              "name": "career-title-7",
+              "label": "Timeline 7 role",
+              "type": "string"
+            },
+            {
+              "name": "career-copy-7",
+              "label": "Timeline 7 description",
+              "type": "text"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
