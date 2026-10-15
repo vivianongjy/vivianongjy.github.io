@@ -102,12 +102,14 @@
         },
         {
           "name": "date",
-          "label": "Date",
+          "label": "Date (optional)",
           "type": "date",
-          "required": true,
+          "required": false,
           "options": {
             "format": "yyyy-MM-dd"
-          }
+          },
+          "default": "",
+          "description": "Leave blank if you do not know or do not want to show the date."
         },
         {
           "name": "location",
