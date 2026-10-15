@@ -102,12 +102,14 @@
         },
         {
           "name": "date",
-          "label": "Date",
+          "label": "Date (optional)",
           "type": "date",
-          "required": true,
+          "required": false,
           "options": {
             "format": "yyyy-MM-dd"
-          }
+          },
+          "default": "",
+          "description": "Leave blank if you do not know or do not want to show the date."
         },
         {
           "name": "location",
@@ -192,6 +194,27 @@
               "type": "text"
             }
           ]
+        },
+        {
+          "name": "portrait",
+          "label": "Photo of me",
+          "description": "Displayed below A little about me, beside the biography. The whole image is shown without cropping.",
+          "type": "image",
+          "options": {
+            "extensions": [
+              "jpg",
+              "jpeg",
+              "png",
+              "webp"
+            ],
+            "rename": "safe"
+          }
+        },
+        {
+          "name": "portraitAlt",
+          "label": "Photo description",
+          "type": "string",
+          "default": "Vivian Ong"
         }
       ]
     },

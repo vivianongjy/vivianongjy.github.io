@@ -5,6 +5,7 @@
     const response = await fetch('/' + page + '-content.json', { cache: 'no-store' });
     if (!response.ok) throw new Error('Unable to load page content');
     const content = await response.json();
+    if (page === 'home') renderHomePortrait(content);
     for (const node of document.querySelectorAll('[data-setting]')) {
       const text = content.text?.[node.dataset.setting];
       if (typeof text === 'string') node.textContent = text;
@@ -25,3 +26,27 @@
     console.warn('Showing the saved page while online content is unavailable.', error);
   }
 })();
+
+function renderHomePortrait(content) {
+  const about = document.querySelector('#about');
+  if (!about) return;
+  let column = about.querySelector('.about-portrait-column');
+  column?.querySelector('.about-portrait')?.remove();
+  if (typeof content.portrait !== 'string' || !content.portrait.trim()) return;
+  let url; try { url = new URL(content.portrait, location.origin); } catch { return; }
+  if (!['http:', 'https:'].includes(url.protocol)) return;
+  if (!column) {
+    const label = about.querySelector(':scope > .section-number');
+    if (!label) return;
+    column = document.createElement('div'); column.className = 'about-portrait-column';
+    label.before(column); column.append(label);
+  }
+  const figure = document.createElement('figure'); figure.className = 'about-portrait';
+  const image = document.createElement('img'); image.src = url.href; image.alt = content.portraitAlt || 'Vivian Ong'; image.loading = 'lazy'; image.decoding = 'async';
+  figure.append(image); column.append(figure);
+  if (!document.getElementById('about-portrait-style')) {
+    const style = document.createElement('style'); style.id = 'about-portrait-style';
+    style.textContent = '.about-portrait{max-width:260px;margin:28px 0 0;padding:10px;background:rgb(255 250 240 / var(--panel-alpha,.55));border:1px solid #d9d3be;border-radius:4px;box-shadow:2px 5px 18px #314b3512}.about-portrait img{display:block;width:100%;height:auto;max-height:none;object-fit:contain;border-radius:2px}.about-portrait-column{min-width:0}@media(max-width:620px){.about-portrait{max-width:240px;margin-top:24px}}';
+    document.head.append(style);
+  }
+}
