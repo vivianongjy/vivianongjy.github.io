@@ -1,3 +1,8 @@
+function formatPostDate(value) {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return '';
+  const date = new Date(value + 'T12:00:00');
+  return Number.isNaN(date.getTime()) ? '' : date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+}
 const journal = document.querySelector('#journal-posts');
 const category = document.body.dataset.category;
 function element(tag, text, className) {
@@ -40,7 +45,7 @@ async function loadJournal() {
         article.append(photos);
       }
       const body = element('div', '', 'journal-card-body');
-      body.append(element('p', [post.location, new Date(post.date + 'T12:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })].filter(Boolean).join(' · '), 'journal-meta'));
+      body.append(element('p', [post.location, formatPostDate(post.date)].filter(Boolean).join(' · '), 'journal-meta'));
       body.append(element('h3', post.title));
       if (post.caption) body.append(element('p', post.caption, 'journal-caption'));
       const target = stages.get(post.lifeStage) || journal;
