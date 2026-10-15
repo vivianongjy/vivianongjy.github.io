@@ -13,29 +13,25 @@
           "app": "instagram",
           "label": "Instagram",
           "detail": "@vivianong_jy",
-          "url": "https://www.instagram.com/vivianong_jy/",
-          "visible": true
+          "url": "https://www.instagram.com/vivianong_jy/"
         },
         {
           "app": "linkedin",
           "label": "LinkedIn",
           "detail": "Vivian Ong",
-          "url": "https://www.linkedin.com/in/vivian-ongjy/",
-          "visible": true
+          "url": "https://www.linkedin.com/in/vivian-ongjy/"
         },
         {
           "app": "facebook",
           "label": "Facebook",
           "detail": "Vivian Ong",
-          "url": "https://www.facebook.com/vivian.o.yi",
-          "visible": true
+          "url": ""
         },
         {
           "app": "snapchat",
           "label": "Snapchat",
-          "detail": "vivianong_1309",
-          "url": "https://www.snapchat.com/web",
-          "visible": true
+          "detail": "",
+          "url": ""
         }
       ]
     },
@@ -46,15 +42,13 @@
           "app": "gmail",
           "label": "Gmail",
           "detail": "vivianong0913@gmail.com",
-          "url": "mailto:vivianong0913@gmail.com",
-          "visible": true
+          "url": "mailto:vivianong0913@gmail.com"
         },
         {
           "app": "phone",
           "label": "Contact",
           "detail": "+1 (715) 829 6299",
-          "url": "tel:+17158296299",
-          "visible": true
+          "url": "tel:+17158296299"
         }
       ]
     }
