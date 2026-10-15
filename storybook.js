@@ -40,3 +40,11 @@ toggle.addEventListener('click', () => {
 });
 reducedMotion.addEventListener('change', event => { if (event.matches) { paused = true; update(); } });
 update(); document.body.append(toggle);
+
+// Decorative animations only run when visible. Honor the existing pause control.
+if ('IntersectionObserver' in window) {
+ const observer = new IntersectionObserver(entries => { for (const entry of entries) entry.target.toggleAttribute('data-offscreen',!entry.isIntersecting); },{rootMargin:'80px'});
+ document.querySelectorAll('.chapter-animation,.world-sky').forEach(scene=>observer.observe(scene));
+}
+function updatePageVisibility(){document.documentElement.toggleAttribute('data-page-hidden',document.hidden);}
+document.addEventListener('visibilitychange',updatePageVisibility);updatePageVisibility();

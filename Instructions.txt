@@ -1,13 +1,15 @@
-HOMEPAGE CONTACT CIRCLES
+PERFORMANCE UPDATE
 
-Upload cms-content.js to the root of your GitHub repository:
+Upload every file in this folder except Instructions.txt to the root of your GitHub repository:
 https://github.com/vivianongjy/vivianongjy.github.io/upload/main
-Commit, wait for GitHub Pages to publish, then refresh the homepage.
+Commit, wait for GitHub Pages to finish publishing, and refresh.
 
-The homepage contact area now displays the same contact sections and app circles as your Let's connect page.
-Manage both in Pages CMS > Let's connect page > Contact sections.
-Adding, hiding, or changing a circle there updates both pages after publication.
-Facebook and Snapchat remain placeholders until you add their links.
+The five background display files are 81% smaller in total.
+The current About me display photo is reduced from 2.96 MB to 54 KB.
+Small homepage circles use smaller photo copies; their pop-ups still use the original images.
+Decorative animations pause outside the viewport and when the browser tab is hidden.
+Existing original uploads and content JSON are preserved. No Pages CMS configuration changes are needed.
 
-This update requires connect-content.json from the previous connect-update package already installed. Do not replace it if you have edited your contacts in CMS.
-Your existing content, songs, and photos are preserved.
+Future uploads: resize photos to about 1200–1600 pixels along the longest edge and save as JPEG or WebP. Aim for under 300–500 KB each where practical. Small circle photos can be 320–500 pixels. Custom background uploads also benefit from compression.
+
+This does not measure or guarantee a specific loading-time improvement. Network speed and the visitor's device still matter.

@@ -18,7 +18,7 @@
     const opacity = Number(content.opacity);
     if (Number.isFinite(opacity) && opacity >= 15 && opacity <= 100) document.documentElement.style.setProperty('--panel-alpha', String(opacity / 100));
     if (typeof content.background === 'string' && content.background.trim()) {
-      const url = new URL(content.background, window.location.origin);
+      const url = new URL(content.background.replace(/^\/(world|personal|family|friends|career)-background\.png$/, '/$1-background.jpg'), window.location.origin);
       if (url.protocol === 'https:' || url.protocol === 'http:') {
         const style = document.createElement('style');
         style.id = 'cms-background';
@@ -75,7 +75,7 @@ function renderHomePortrait(content) {
     label.before(column); column.append(label);
   }
   const figure = document.createElement('figure'); figure.className = 'about-portrait';
-  const image = document.createElement('img'); image.src = url.href; image.alt = content.portraitAlt || 'Vivian Ong'; image.loading = 'lazy'; image.decoding = 'async';
+  const image = document.createElement('img'); image.src = fastDisplayImage(url.href); image.alt = content.portraitAlt || 'Vivian Ong'; image.loading = 'lazy'; image.decoding = 'async';
   figure.append(image); column.append(figure);
   if (!document.getElementById('about-portrait-style')) {
     const style = document.createElement('style'); style.id = 'about-portrait-style';
@@ -128,7 +128,7 @@ function renderMeetVersions(content) {
     const source = safePhoto(version.photo);
     const button = document.createElement('button'); button.type = 'button'; button.className = 'meet-version'; button.setAttribute('aria-haspopup', 'dialog');
     const circle = document.createElement('span'); circle.className = 'meet-circle';
-    if (source) { const image = document.createElement('img'); image.src = source; image.alt = ''; image.width = 112; image.height = 112; circle.append(image); }
+    if (source) { const image = document.createElement('img'); image.src = fastDisplayImage(source); image.decoding = 'async'; image.alt = ''; image.width = 112; image.height = 112; circle.append(image); }
     else { circle.textContent = String(index + 1).padStart(2, '0'); circle.setAttribute('aria-hidden', 'true'); }
     const caption = document.createElement('span'); caption.textContent = label;
     button.append(circle, caption); grid.append(button);
@@ -276,3 +276,8 @@ async function renderHomeConnect() {
   } catch (error) { console.warn('Showing saved homepage contact links.', error); }
 }
 renderHomeConnect();
+
+function fastDisplayImage(source) {
+ const images = {"/uploads/img2027original.jpeg":"/fast-portrait-1.jpg","/uploads/1746454297686.jpeg":"/fast-portrait-2.jpg","/uploads/img0627original-2.jpg":"/fast-portrait-3.jpg","/uploads/img5927.jpg":"/fast-portrait-4.jpg","/uploads/img5928-2.jpg":"/fast-portrait-5.jpg"};
+ try { const url = new URL(source,location.origin); return url.origin === location.origin && images[url.pathname] ? images[url.pathname] : source; } catch { return source; }
+}
