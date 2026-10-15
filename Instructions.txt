@@ -1,8 +1,31 @@
-PLAY ME BUTTON
-Upload cms-content.js from this folder to:
-https://github.com/vivianongjy/vivianongjy.github.io/upload/main
-Commit, wait for GitHub Pages to publish, and refresh the website.
+LET'S CONNECT PAGE
 
-The button reads “play me!” and appears directly above the homepage Malaysian roots / New York chapter line. On other pages it appears above the chapter eyebrow.
-Clicking requests playback immediately and reveals compact provider controls. YouTube uses autoplay only after this click. Spotify uses its official embed play API. Browser/provider restrictions can still require using the native play button. Closing the box folds it away; use the provider controls to pause.
-Existing Pages CMS song links and headings are unchanged. Blank song links hide the button.
+1. Upload these four files to the root of your GitHub repository:
+connect.html
+connect-content.json
+cms-content.js
+pages-cms-config.txt
+https://github.com/vivianongjy/vivianongjy.github.io/upload/main
+Commit changes. You do not need to upload index.html.
+
+2. Open the CMS configuration:
+https://github.com/vivianongjy/vivianongjy.github.io/edit/main/.pages.yml
+Replace its contents with all the text from this update's pages-cms-config.txt and commit.
+
+3. Refresh https://app.pagescms.org and open your repository > Let’s connect page.
+Under Contact sections, expand a section and use App circles to add or edit circles.
+Each circle has an app logo, optional custom logo image, app name, username/contact detail, destination link, and Show this circle switch.
+Add more Contact sections to group your circles. Save to publish changes.
+
+Instagram and LinkedIn links are filled in.
+Gmail: mailto:vivianong0913@gmail.com
+Contact: tel:+17158296299
+Facebook and Snapchat are placeholders until you supply links.
+
+Your page will be https://vivianongjy.github.io/connect.html after GitHub Pages finishes publishing.
+All existing Let's connect navigation links are redirected to this page by the updated shared script.
+Other content, photos and song links are not overwritten.
+Do not reupload connect-content.json after editing this page in CMS; it contains only the initial contact list.
+
+Local preview: http://127.0.0.1:8787/connect.html
+The local and GitHub versions remain separate copies; use Pages CMS to maintain the public GitHub page.

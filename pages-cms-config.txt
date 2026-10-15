@@ -740,6 +740,116 @@
           ]
         }
       ]
+    },
+    {
+      "name": "connect",
+      "label": "Let’s connect page",
+      "type": "file",
+      "path": "connect-content.json",
+      "format": "json",
+      "fields": [
+        {
+          "name": "opacity",
+          "label": "Panel opacity (%)",
+          "type": "number",
+          "default": 55
+        },
+        {
+          "name": "background",
+          "label": "Background",
+          "type": "image"
+        },
+        {
+          "name": "text",
+          "label": "Page text",
+          "type": "object",
+          "fields": [
+            {
+              "name": "connect-title",
+              "label": "Title",
+              "type": "string"
+            },
+            {
+              "name": "intro",
+              "label": "Introduction",
+              "type": "text"
+            }
+          ]
+        },
+        {
+          "name": "groups",
+          "label": "Contact sections",
+          "type": "object",
+          "list": {
+            "collapsible": {
+              "collapsed": true,
+              "summary": "{title}"
+            }
+          },
+          "fields": [
+            {
+              "name": "title",
+              "label": "Section heading",
+              "type": "string"
+            },
+            {
+              "name": "links",
+              "label": "App circles",
+              "type": "object",
+              "list": {
+                "collapsible": {
+                  "collapsed": true,
+                  "summary": "{label}"
+                }
+              },
+              "fields": [
+                {
+                  "name": "app",
+                  "label": "App logo",
+                  "type": "select",
+                  "options": {
+                    "values": [
+                      "instagram",
+                      "linkedin",
+                      "gmail",
+                      "phone",
+                      "facebook",
+                      "snapchat",
+                      "other"
+                    ]
+                  }
+                },
+                {
+                  "name": "logo",
+                  "label": "Custom logo (optional)",
+                  "type": "image"
+                },
+                {
+                  "name": "label",
+                  "label": "App name",
+                  "type": "string"
+                },
+                {
+                  "name": "detail",
+                  "label": "Username or contact detail",
+                  "type": "string"
+                },
+                {
+                  "name": "url",
+                  "label": "Link (https://, mailto:, or tel:)",
+                  "type": "string"
+                },
+                {
+                  "name": "visible",
+                  "label": "Show this circle",
+                  "type": "boolean",
+                  "default": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

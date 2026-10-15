@@ -5,6 +5,7 @@
     const response = await fetch('/' + page + '-content.json', { cache: 'no-store' });
     if (!response.ok) throw new Error('Unable to load page content');
     const content = await response.json();
+    if (page === 'connect') renderConnectPage(content);
     renderPageMusic(content);
     if (page === 'personal') renderLifeStagePhotos(content);
     if (page === 'home') renderHomePortrait(content);
@@ -213,4 +214,43 @@ function loadSpotifyEmbedApi() {
     const script = document.createElement('script'); script.src = 'https://open.spotify.com/embed/iframe-api/v1'; script.onerror = () => reject(new Error('Spotify player could not load')); document.head.append(script);
   });
   return window.vivianSpotifyEmbedApi;
+}
+
+function renderConnectPage(content) {
+  const container = document.querySelector('#contact-groups'); if (!container) return;
+  container.replaceChildren();
+  const icons = {
+    instagram:'<rect x="4" y="4" width="24" height="24" rx="7" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="16" cy="16" r="6" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="24" cy="8.5" r="1.6"/>',
+    linkedin:'<rect x="3" y="3" width="26" height="26" rx="4"/><text x="7" y="24" fill="white" font-family="Arial,sans-serif" font-size="23" font-weight="bold">in</text>',
+    gmail:'<path d="M3 25V8l13 10L29 8v17" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="m3 8 13 10L29 8" fill="none" stroke="#b34b40" stroke-width="4"/>',
+    phone:'<path d="m9 4 5 7-4 4c2 4 3 5 7 7l4-4 7 5c-2 6-5 7-10 4C10 23 5 18 3 10 2 6 5 4 9 4Z"/>',
+    facebook:'<circle cx="16" cy="16" r="14"/><text x="11" y="29" fill="white" font-family="Arial,sans-serif" font-size="29" font-weight="bold">f</text>',
+    snapchat:'<path d="M10 13c-2-10 14-10 12 0 0 3 1 4 5 6-1 2-3 2-4 3l-1 3-4-1-2 1-2-1-4 1-1-3c-1-1-3-1-4-3 4-2 5-3 5-6Z" fill="none" stroke="currentColor" stroke-width="2"/>',
+    other:'<path d="m13 10 3-3c7-7 16 2 9 9l-3 3M19 22l-3 3C9 32 0 23 7 16l3-3m1 8 10-10" fill="none" stroke="currentColor" stroke-width="3"/>'
+  };
+  for (const group of Array.isArray(content.groups) ? content.groups : []) {
+    const section = document.createElement('section'); section.className = 'contact-group';
+    const heading = document.createElement('h2'); heading.textContent = group.title || 'Connect with me'; section.append(heading);
+    const grid = document.createElement('div'); grid.className = 'contact-grid'; section.append(grid);
+    for (const item of Array.isArray(group.links) ? group.links : []) {
+      if (item.visible === false) continue;
+      let url; try { url = new URL(item.url); if (!['https:','http:','mailto:','tel:'].includes(url.protocol) || url.username || url.password) url = null; } catch { url = null; }
+      const card = document.createElement(url ? 'a' : 'div'); card.className = 'contact-circle-card';
+      if (url) { card.href = url.href; if (['https:','http:'].includes(url.protocol)) { card.target = '_blank'; card.rel = 'noopener noreferrer'; } }
+      const circle = document.createElement('span'); circle.className = 'contact-logo'; circle.dataset.app = item.app || 'other'; circle.setAttribute('aria-hidden','true');
+      let logo; try { if(item.logo) { const u = new URL(item.logo,location.origin); if(['https:','http:'].includes(u.protocol)) logo = u.href; } } catch {}
+      if (logo) { const image=document.createElement('img');image.src=logo;image.alt='';image.width=40;image.height=40;circle.append(image); }
+      else { const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 32 32');svg.innerHTML=icons[item.app] || icons.other;circle.append(svg); }
+      const label=document.createElement('strong');label.textContent=item.label || item.app || 'Connect';
+      const detail=document.createElement('span');detail.className='contact-detail';detail.textContent=item.detail || '';
+      card.append(circle,label,detail);
+      if(!url){const soon=document.createElement('small');soon.textContent='Link coming soon';card.append(soon);}
+      grid.append(card);
+    }
+    container.append(section);
+  }
+}
+// All existing navigation and home callouts lead to the dedicated page.
+for (const link of document.querySelectorAll('a')) {
+  if (/let[’']s connect/i.test(link.textContent) || ['#connect','/#connect'].includes(link.getAttribute('href'))) link.setAttribute('href','/connect.html');
 }

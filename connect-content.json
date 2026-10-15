@@ -1,0 +1,56 @@
+{
+  "opacity": 55,
+  "background": "/world-background.png",
+  "text": {
+    "connect-title": "Let's connect.",
+    "intro": "A little hello can lead to a whole new chapter. Find me here."
+  },
+  "groups": [
+    {
+      "title": "Around the internet",
+      "links": [
+        {
+          "app": "instagram",
+          "label": "Instagram",
+          "detail": "@vivianong_jy",
+          "url": "https://www.instagram.com/vivianong_jy/"
+        },
+        {
+          "app": "linkedin",
+          "label": "LinkedIn",
+          "detail": "Vivian Ong",
+          "url": "https://www.linkedin.com/in/vivian-ongjy/"
+        },
+        {
+          "app": "facebook",
+          "label": "Facebook",
+          "detail": "Vivian Ong",
+          "url": ""
+        },
+        {
+          "app": "snapchat",
+          "label": "Snapchat",
+          "detail": "",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "title": "Say hello directly",
+      "links": [
+        {
+          "app": "gmail",
+          "label": "Gmail",
+          "detail": "vivianong0913@gmail.com",
+          "url": "mailto:vivianong0913@gmail.com"
+        },
+        {
+          "app": "phone",
+          "label": "Contact",
+          "detail": "+1 (715) 829 6299",
+          "url": "tel:+17158296299"
+        }
+      ]
+    }
+  ]
+}
