@@ -1,1 +1,23 @@
-[{"id":"5b4a3654-8b09-4743-bb8d-f296c8def0c5","category":"friends","lifeStage":"","title":"Ethan's farewell","caption":"It's our last dinner with Ethan before he moved to Texas!","location":"Eau Claire, WI","date":"2022-04-08","images":["/post-5b4a3654-8b09-4743-bb8d-f296c8def0c5-0.jpg"],"createdAt":"2026-10-15T04:38:11.594Z"}]
+[
+  {
+    "id": "5b4a3654-8b09-4743-bb8d-f296c8def0c5",
+    "title": "Ethan's farewell",
+    "category": "friends",
+    "date": "2022-04-08",
+    "location": "Eau Claire, WI",
+    "caption": "It's our last dinner with Ethan before he moved to Texas!",
+    "images": [
+      "/post-5b4a3654-8b09-4743-bb8d-f296c8def0c5-0.jpg"
+    ],
+    "createdAt": "2026-10-15T04:38:11.594Z"
+  },
+  {
+    "id": "83c24b44-8cf9-46c0-871a-ecc3d67c3b57",
+    "title": "baby me!",
+    "category": "personal",
+    "lifeStage": "toddler",
+    "images": [
+      "/uploads/bf6a4025-866b-4cd8-b168-8ba85a30fd66.jpg"
+    ]
+  }
+]
