@@ -225,6 +225,67 @@
           "label": "Photo description",
           "type": "string",
           "default": "Vivian Ong"
+        },
+        {
+          "name": "meetVersions",
+          "label": "Four versions of me",
+          "type": "object",
+          "list": {
+            "min": 4,
+            "max": 4,
+            "collapsible": {
+              "collapsed": true,
+              "summary": "{label}"
+            }
+          },
+          "default": [
+            {
+              "label": "Version 1",
+              "photo": "",
+              "message": ""
+            },
+            {
+              "label": "Version 2",
+              "photo": "",
+              "message": ""
+            },
+            {
+              "label": "Version 3",
+              "photo": "",
+              "message": ""
+            },
+            {
+              "label": "Version 4",
+              "photo": "",
+              "message": ""
+            }
+          ],
+          "fields": [
+            {
+              "name": "photo",
+              "label": "Circle photo",
+              "type": "image",
+              "options": {
+                "extensions": [
+                  "jpg",
+                  "jpeg",
+                  "png",
+                  "webp"
+                ],
+                "rename": "safe"
+              }
+            },
+            {
+              "name": "label",
+              "label": "Version label",
+              "type": "string"
+            },
+            {
+              "name": "message",
+              "label": "Pop-up message",
+              "type": "text"
+            }
+          ]
         }
       ]
     },
