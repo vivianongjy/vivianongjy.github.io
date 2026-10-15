@@ -216,8 +216,8 @@ function loadSpotifyEmbedApi() {
   return window.vivianSpotifyEmbedApi;
 }
 
-function renderConnectPage(content) {
-  const container = document.querySelector('#contact-groups'); if (!container) return;
+function renderConnectPage(content, container = document.querySelector('#contact-groups')) {
+  if (!container) return;
   container.replaceChildren();
   const icons = {
     instagram:'<rect x="4" y="4" width="24" height="24" rx="7" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="16" cy="16" r="6" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="24" cy="8.5" r="1.6"/>',
@@ -254,3 +254,25 @@ function renderConnectPage(content) {
 for (const link of document.querySelectorAll('a')) {
   if (/let[’']s connect/i.test(link.textContent) || ['#connect','/#connect'].includes(link.getAttribute('href'))) link.setAttribute('href','/connect.html');
 }
+
+async function renderHomeConnect() {
+  if (document.body.dataset.category) return;
+  const section = document.querySelector('#connect'); if (!section) return;
+  try {
+    const response = await fetch('/connect-content.json', { cache:'no-store' });
+    if (!response.ok) throw new Error('Unable to load contact links');
+    const content = await response.json();
+    if (!Array.isArray(content.groups)) return;
+    const container = document.createElement('div'); container.id = 'home-contact-groups';
+    renderConnectPage(content, container);
+    const previous = section.querySelector('.socials, #home-contact-groups');
+    if (previous) previous.replaceWith(container); else section.append(container);
+    const intro = section.querySelector('p'); if (intro) intro.textContent = 'Find me around the internet, or send a little hello.';
+    let more = section.querySelector('.all-contact-links');
+    if (!more) { more = document.createElement('a'); more.className = 'all-contact-links'; more.href = '/connect.html'; more.textContent = 'Let’s connect ↗'; section.append(more); }
+    if (!document.getElementById('home-connect-style')) {
+      const style = document.createElement('style'); style.id = 'home-connect-style'; style.textContent = ".contact-group{padding:28px;margin:24px 0 36px;border:1px solid var(--line);border-radius:16px;background:var(--panel-cream,#fff9ed8c)}.contact-group h2{font-size:28px}.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:24px}.contact-circle-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;text-decoration:none;padding:12px 4px;color:#315d43;min-width:0}.contact-logo{display:grid;place-items:center;width:90px;height:90px;border-radius:50%;background:#fffaf0;border:1px solid #b8c8ac;box-shadow:0 4px 14px #304a3515;transition:transform .2s}.contact-logo svg,.contact-logo img{width:40px;height:40px;object-fit:contain;fill:currentColor}.contact-logo[data-app=instagram]{color:#b54e79}.contact-logo[data-app=linkedin],.contact-logo[data-app=facebook]{color:#246398}.contact-logo[data-app=snapchat]{background:#fff5a2;color:#25352b}.contact-circle-card[href]:hover .contact-logo{transform:translateY(-4px)}.contact-detail{font-size:13px;overflow-wrap:anywhere;max-width:100%}.contact-circle-card small{font-size:11px;color:var(--muted)}@media(max-width:620px){.contact-group{padding:22px 16px}.contact-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 10px}.contact-logo{width:78px;height:78px}}#connect:has(#home-contact-groups){display:block}#home-contact-groups{margin-top:24px}#home-contact-groups .contact-group{padding:18px 0;margin:18px 0;background:transparent;border:0;border-radius:0}#home-contact-groups h2{font-size:21px;margin-bottom:18px}#home-contact-groups .contact-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}#home-contact-groups .contact-logo{width:70px;height:70px}#home-contact-groups .contact-logo svg,#home-contact-groups .contact-logo img{width:32px;height:32px}#connect .all-contact-links{display:inline-block;margin-top:12px;font-size:14px}@media(max-width:620px){#home-contact-groups .contact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}"; document.head.append(style);
+    }
+  } catch (error) { console.warn('Showing saved homepage contact links.', error); }
+}
+renderHomeConnect();
