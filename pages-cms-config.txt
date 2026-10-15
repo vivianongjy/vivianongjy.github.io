@@ -184,8 +184,26 @@
           "type": "object",
           "fields": [
             {
+              "name": "hero-last-name",
+              "label": "Last name",
+              "type": "string",
+              "default": "Ong."
+            },
+            {
+              "name": "hero-first-name",
+              "label": "First name",
+              "type": "string",
+              "default": "Vivian"
+            },
+            {
+              "name": "hero-greeting",
+              "label": "Greeting (Hi, I’m)",
+              "type": "string",
+              "default": "Hi, I'm"
+            },
+            {
               "name": "intro",
-              "label": "Page introduction",
+              "label": "Homepage introduction (under your name)",
               "type": "text"
             },
             {
