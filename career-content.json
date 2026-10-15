@@ -1,0 +1,30 @@
+{
+  "opacity": 55,
+  "background": "/career-background.png",
+  "text": {
+    "intro": "From my first job at 14 to working as a Global Retirement & Benefits Actuary at Willis Towers Watson.",
+    "story-title": "A journey that started at 14.",
+    "story-copy": "I worked through college, taking on roles in hospitality, campus life, and beyond. Here are a few chapters that led to where I am today.",
+    "career-when-1": "AGE 14",
+    "career-title-1": "Restaurant server",
+    "career-copy-1": "I started working at 14 as a restaurant server.",
+    "career-when-2": "AGE 16",
+    "career-title-2": "Barista & cashier",
+    "career-copy-2": "At 16, I became a barista and cashier, and continued working through college.",
+    "career-when-3": "AGE 20 · US",
+    "career-title-3": "Sushi store cashier",
+    "career-copy-3": "At 20, I worked as a cashier in a sushi store in the US.",
+    "career-when-4": "COLLEGE BREAKS",
+    "career-title-4": "Custodian",
+    "career-copy-4": "I worked as a custodian during summer and winter breaks.",
+    "career-when-5": "SEMESTER BREAK · MALAYSIA",
+    "career-title-5": "Mathematics & English tutor · Factory work",
+    "career-copy-5": "During a semester break in Malaysia, I cared for my mother while she was ill. During that time, I also worked as a mathematics and English tutor and packed screws in a factory.",
+    "career-when-6": "AGE 21 · FINAL TWO YEARS OF COLLEGE",
+    "career-title-6": "Resident assistant",
+    "career-copy-6": "At 21, I became a resident assistant, a role I held for my final two years of college.",
+    "career-when-7": "AGE 23 · WILLIS TOWERS WATSON",
+    "career-title-7": "Global Retirement & Benefits Actuary",
+    "career-copy-7": "At 23, I became a Global Retirement & Benefits Actuary at Willis Towers Watson, where I work today."
+  }
+}

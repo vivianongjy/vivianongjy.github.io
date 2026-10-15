@@ -10,7 +10,7 @@ async function loadJournal() {
   try {
     const response = await fetch('/posts.json', { cache: 'no-store' });
     if (!response.ok) throw new Error('Unable to load posts');
-    const posts = (await response.json()).filter(post => !category || (post.category || 'personal') === category);
+    const posts = (await response.json()).filter(post => !category || (post.category || 'personal') === category).map(post => ({ ...post, images: Array.isArray(post.images) ? post.images : [] })).sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')) || String(b.createdAt || '').localeCompare(String(a.createdAt || '')));
     if (!journal) {
       for (const card of document.querySelectorAll('[data-section]')) {
         const items = posts.filter(post => (post.category || 'personal') === card.dataset.section);

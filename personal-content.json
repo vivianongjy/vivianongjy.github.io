@@ -1,0 +1,20 @@
+{
+  "opacity": 55,
+  "background": "/personal-background.png",
+  "text": {
+    "intro": "Postcards, photographs, and little moments along the way.",
+    "interests-intro": "Travelling, staying active, and finding something delicious along the way.",
+    "interest-title-1": "Travelling",
+    "interest-copy-1": "New places, fresh perspectives, and memories to bring home.",
+    "interest-title-2": "Sports",
+    "interest-copy-2": "Golf, badminton, basketball, pickleball, and more.",
+    "interest-title-3": "Good food",
+    "interest-copy-3": "I love exploring for good food and cooking for myself, too.",
+    "life-toddler": "",
+    "life-kindergarten": "",
+    "life-primary": "",
+    "life-high-school": "",
+    "life-college": "",
+    "life-university": ""
+  }
+}
