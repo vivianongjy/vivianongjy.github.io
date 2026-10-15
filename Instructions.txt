@@ -1,13 +1,8 @@
-SMALL TOP MUSIC BUTTON
-
-Upload only cms-content.js from this folder to your GitHub repository:
+PLAY ME BUTTON
+Upload cms-content.js from this folder to:
 https://github.com/vivianongjy/vivianongjy.github.io/upload/main
-Commit the change, wait for GitHub Pages to publish, and refresh the website.
+Commit, wait for GitHub Pages to publish, and refresh the website.
 
-This replaces the bottom music section on all five pages with a small top button.
-The button opens a compact Spotify or YouTube player; press play in that player to listen.
-Close or Escape folds the player away while playback can continue. Reopen to pause.
-Changing pages stops that page's song.
-Your existing Pages CMS Song link and Music heading fields still work.
-Blank song links hide the button. This update does not change your song selections.
-If music fields have not yet been installed, first follow Music update instructions.txt from the previous music-update.zip, then upload this cms-content.js last.
+The button reads “play me!” and appears directly above the homepage Malaysian roots / New York chapter line. On other pages it appears above the chapter eyebrow.
+Clicking requests playback immediately and reveals compact provider controls. YouTube uses autoplay only after this click. Spotify uses its official embed play API. Browser/provider restrictions can still require using the native play button. Closing the box folds it away; use the provider controls to pause.
+Existing Pages CMS song links and headings are unchanged. Blank song links hide the button.

@@ -162,25 +162,55 @@ function renderPageMusic(content) {
   document.getElementById('page-music-style')?.remove();
   const embed = musicEmbed(content.text?.['music-url']);
   if (!embed) return;
-  const header = document.querySelector('header'); if (!header) return;
+  const anchor = document.querySelector('.hero .eyebrow, .chapter-intro .eyebrow'); if (!anchor) return;
   const section = document.createElement('div'); section.id = 'page-music';
-  const button = document.createElement('button'); button.type = 'button'; button.className = 'music-toggle'; button.textContent = '▶ Music'; button.setAttribute('aria-expanded','false'); button.setAttribute('aria-controls','music-mini-player');
+  const button = document.createElement('button'); button.type = 'button'; button.className = 'music-toggle'; button.textContent = '▶ play me!'; button.setAttribute('aria-expanded','false'); button.setAttribute('aria-controls','music-mini-player');
   const panel = document.createElement('div'); panel.id = 'music-mini-player'; panel.hidden = true; panel.setAttribute('role','region');
   const title = content.text?.['music-title']?.trim() || 'A song for this chapter'; panel.setAttribute('aria-label',title); button.title = title;
   const heading = document.createElement('p'); heading.className = 'music-mini-title'; heading.textContent = title;
   const close = document.createElement('button'); close.type = 'button'; close.className = 'music-mini-close'; close.textContent = 'Close ×';
   const link = document.createElement('a'); link.href = embed.link; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.textContent = 'Open in ' + embed.provider + ' ↗';
-  panel.append(heading,close,link); section.append(button,panel); header.after(section);
-  let frame;
+  panel.append(heading,close,link); section.append(button,panel); anchor.before(section);
+  let frame, spotifyController, requested = false;
   function setOpen(open) {
-    panel.hidden = !open; button.setAttribute('aria-expanded',String(open)); button.textContent = open ? '♫ Music' : '▶ Music';
-    if (open && !frame) {
-      frame = document.createElement('iframe'); frame.src = embed.src; frame.title = title + ' — ' + embed.provider; frame.allow = 'encrypted-media; fullscreen; picture-in-picture'; frame.allowFullscreen = true; frame.referrerPolicy = 'strict-origin-when-cross-origin'; frame.height = embed.provider === 'Spotify' ? '152' : '200'; panel.insertBefore(frame,link);
-    }
+    panel.hidden = !open; button.setAttribute('aria-expanded',String(open));
   }
-  button.onclick = () => setOpen(panel.hidden);
+  const hint = document.createElement('p'); hint.className = 'music-play-hint'; hint.textContent = 'If the song does not start, press play in the player below.';
+  panel.insertBefore(hint,link);
+  function makeFrame(autoplay) {
+    frame = document.createElement('iframe'); frame.src = embed.src + (embed.provider === 'YouTube' ? '?autoplay=' + (autoplay ? '1' : '0') + '&playsinline=1' : ''); frame.title = title + ' — ' + embed.provider; frame.allow = 'autoplay; encrypted-media; fullscreen; picture-in-picture'; frame.allowFullscreen = true; frame.referrerPolicy = 'strict-origin-when-cross-origin'; frame.height = embed.provider === 'Spotify' ? '152' : '200'; panel.insertBefore(frame,hint);
+  }
+  button.onclick = () => {
+    setOpen(true);
+    if (spotifyController) { spotifyController.play(); return; }
+    if (requested) { frame?.focus(); return; }
+    requested = true;
+    if (embed.provider === 'YouTube') { makeFrame(true); return; }
+    const mount = document.createElement('div'); panel.insertBefore(mount,hint);
+    const fallback = () => { if (!section.isConnected || spotifyController || frame) return; mount.remove(); makeFrame(false); };
+    const timeout = setTimeout(fallback, 10000);
+    loadSpotifyEmbedApi().then(api => {
+      if (!section.isConnected || frame) return;
+      api.createController(mount, { uri: 'spotify:track:' + embed.link.split('/').pop(), width: '100%', height:152 }, controller => {
+        if (!section.isConnected) { controller.destroy?.(); return; }
+        clearTimeout(timeout); spotifyController = controller;
+        controller.addListener('ready', () => { try { controller.play(); } catch { /* Native player stays available. */ } });
+        try { controller.play(); } catch { /* The ready event retries once initialized. */ }
+      });
+    }).catch(() => { clearTimeout(timeout); fallback(); });
+  };
   close.onclick = () => { setOpen(false); button.focus(); };
   section.addEventListener('keydown',event => { if(event.key === 'Escape') { setOpen(false); button.focus(); } });
   const style = document.createElement('style'); style.id = 'page-music-style';
-  style.textContent = '#page-music{box-sizing:border-box;position:relative;z-index:4;max-width:1280px;padding:0 64px;margin:-8px auto 12px;display:flex;justify-content:flex-end}.music-toggle{font:13px/1.2 inherit;color:#315d43;background:#fff9edd9;border:1px solid #b9c7ab;border-radius:24px;padding:10px 15px;min-height:40px;cursor:pointer;box-shadow:0 2px 8px #304a3510}.music-toggle:focus-visible,.music-mini-close:focus-visible{outline:3px solid #315d43;outline-offset:3px}#music-mini-player{box-sizing:border-box;position:absolute;right:64px;top:48px;width:340px;max-width:calc(100vw - 40px);padding:16px;background:#fff9ed;border:1px solid #bcc9af;border-radius:16px;box-shadow:0 10px 35px #304a3533}#music-mini-player[hidden]{display:none}.music-mini-title{font:16px/1.5 Georgia,serif;color:#315d43;margin:0 55px 16px 0;overflow-wrap:anywhere}.music-mini-close{position:absolute;right:12px;top:12px;border:0;background:none;color:#315d43;font-size:12px;cursor:pointer}#music-mini-player iframe{display:block;border:0;border-radius:10px;width:100%;margin:0 0 12px}#music-mini-player a{font-size:12px;color:#315d43}@media(max-width:900px){#page-music{padding:0 28px}#music-mini-player{right:28px}}'; document.head.append(style);
+  style.textContent = '#page-music{box-sizing:border-box;position:relative;z-index:4;width:100%;padding:0;margin:0 0 18px;display:block}.music-toggle{font:13px/1.2 system-ui,sans-serif;color:#315d43;background:#fff9edd9;border:1px solid #b9c7ab;border-radius:24px;padding:10px 15px;min-height:40px;cursor:pointer;box-shadow:0 2px 8px #304a3510}.music-toggle:focus-visible,.music-mini-close:focus-visible{outline:3px solid #315d43;outline-offset:3px}#music-mini-player{box-sizing:border-box;position:relative;margin-top:10px;width:340px;max-width:100%;padding:16px;background:#fff9ed;border:1px solid #bcc9af;border-radius:16px;box-shadow:0 10px 35px #304a3533}#music-mini-player[hidden]{display:none}.music-mini-title{font:16px/1.5 Georgia,serif;color:#315d43;margin:0 55px 16px 0;overflow-wrap:anywhere}.music-mini-close{position:absolute;right:12px;top:12px;border:0;background:none;color:#315d43;font-size:12px;cursor:pointer}#music-mini-player iframe{display:block;border:0;border-radius:10px;width:100%;margin:0 0 12px}#music-mini-player a{font-size:12px;color:#315d43}.music-play-hint{font:12px/1.5 system-ui,sans-serif;color:#596b5e;margin:8px 0}'; document.head.append(style);
+}
+
+function loadSpotifyEmbedApi() {
+  if (window.vivianSpotifyEmbedApi) return window.vivianSpotifyEmbedApi;
+  window.vivianSpotifyEmbedApi = new Promise((resolve,reject) => {
+    const previous = window.onSpotifyIframeApiReady;
+    window.onSpotifyIframeApiReady = api => { resolve(api); if (typeof previous === 'function') previous(api); };
+    const script = document.createElement('script'); script.src = 'https://open.spotify.com/embed/iframe-api/v1'; script.onerror = () => reject(new Error('Spotify player could not load')); document.head.append(script);
+  });
+  return window.vivianSpotifyEmbedApi;
 }
