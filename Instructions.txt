@@ -1,29 +1,43 @@
-DRAG AND CLICK DIRECTLY
+POWERPOINT-STYLE PAGE EDITING
 
+ONE-TIME UPDATE
 Upload these four files to the root of your GitHub repository:
 cms-content.js
 inline-editor.js
 inline-editor.css
 journal.js
 https://github.com/vivianongjy/vivianongjy.github.io/upload/main
-Commit, wait for GitHub Pages to finish publishing, and refresh your website.
-Existing content JSON, layouts, photos, songs and contacts are preserved.
+Commit, wait for GitHub Pages publishing to finish, and refresh your site.
+Your existing JSON, photos, songs, layouts and contacts are preserved.
 
-USE
-1. Select Owner edit and enter your usual website access key.
-2. Click a portrait circle, contact circle, photo, memory card or box to open its editor. Click outlined text to type directly.
-3. Drag a circle to move it within its visual/contact section. Drag boxes across the main page area. On a phone, drag circles directly and drag boxes by the dotted top edge; scroll from the rest of the page.
-4. Use Undo move to reverse the last movement. Click a moved item and choose Reset position to return it to its normal place.
-5. Save changes publishes the arrangement and content changes. Nothing is published just by dragging.
-6. Exit / discard leaves the owner editor and clears the key when the page reloads.
+SELECT AND MOVE TEXT
+Open Owner edit and enter your GitHub access key.
+Click existing text to select it. Type directly as before. Drag its selection border's Move grip to reposition the whole text box without selecting its letters.
+Circles, pictures, cards and boxes still support direct dragging. Phones use the Move grip or a box's dotted top edge.
 
-Desktop and phone positions are stored separately. Arrange the phone view separately if you want a custom phone layout. Keyboard users can focus an item and use Alt + arrow keys to move it (Shift for finer steps); Escape resets its position.
+ALIGNMENT AND ROTATION
+A selected item shows Left / Center / Right and Top / Middle / Bottom controls, relative to its containing section or main page.
+Pink guides appear near matching edges and centers during dragging. Items snap when close to a guide. Guides: on/off switches snapping; holding Alt during dragging temporarily bypasses it.
+Drag the circular rotation handle or enter an angle in degrees. Rotation snaps near 15-degree increments; holding Shift forces those increments. Straighten resets the angle to zero.
+Style opens text size, color, spacing and other appearance controls for the selected item.
 
-The repeated per-item edit buttons and Layout shortcut are hidden/removed from the page editing flow. Advanced item styling remains in the box editor; circle appearance settings are available from a portrait circle's editor. Background & song and Add memory remain in the owner toolbar.
+INSERT OBJECTS
+Text box inserts editable text.
+Picture uploads a resized photo; add a description and choose its width.
+Emoji inserts any emoji or text symbol you type or paste.
+New objects are placed inside the selected page section (or the first section if none is selected). Their Edit and Delete controls appear in the selection toolbar. Drag them to arrange them alongside existing content.
+The width of an inserted object can be changed in its Edit dialog. Pictures display uncropped at their natural proportions.
 
-MOVEMENT
-Moving items changes their visual positions; the page still keeps their original space in its normal flow. Items can overlap if you place them on top of each other. Reset or Undo restores their position. Movement is bounded to the main page or the circle's section to avoid moving items off the page.
+APPLY AND PUBLISH
+Apply object previews it on your page.
+Save changes publishes the content, arrangement and inserted objects through GitHub.
+Guides, selection borders and editing toolbars never appear to visitors.
+Exit / discard leaves editing and clears the key on reload.
+Desktop and mobile moves remain independent; arrange the phone layout separately where needed. New objects have a default phone placement and width.
 
-Visitor pages show only the saved arrangement, with no drag edges or editing controls. GitHub authorization is still required for saving. Your key is kept only in tab memory.
+LAYOUT NOTES
+This is a website canvas with PowerPoint-style controls, not Microsoft PowerPoint or a .pptx editor. Objects remain within their page/section. Free placement can overlap other content; use guides, Undo move or reset position to arrange them. Inserted objects expand their section when needed.
+Text is plain text, including Unicode emojis. It does not accept arbitrary HTML or scripts.
 
-Verification used a simulated GitHub API, including mouse/touch movement, direct clicking, undo, explicit saving, independent phone positions, and visitor rendering. No real repository content was changed during testing.
+VERIFICATION
+Simulated GitHub tests covered existing text movement, center alignment, visible snapping guides, rotation handles, straightening, inserted text/pictures/emojis, explicit save, visitor rendering, and mobile layout. No real repository changes were made during tests.
