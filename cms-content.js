@@ -1,10 +1,11 @@
-// The public site reads content; all editing happens in authenticated Pages CMS.
+// Public pages read saved content; owner changes are authenticated through GitHub.
 (async () => {
   const page = document.body.dataset.category || 'home';
   try {
     const response = await fetch('/' + page + '-content.json', { cache: 'no-store' });
     if (!response.ok) throw new Error('Unable to load page content');
     const content = await response.json();
+    window.vivianPageDesignContent = content;
     if (page === 'connect') renderConnectPage(content);
     renderPageMusic(content);
     if (page === 'personal') renderLifeStagePhotos(content);
@@ -26,6 +27,7 @@
         document.head.append(style);
       }
     }
+    applyPageDesign(content);
   } catch (error) {
     // HTML includes the last exported content, so the page remains readable.
     console.warn('Showing the saved page while online content is unavailable.', error);
@@ -292,8 +294,9 @@ function isInlinePreviewUrl(url) { return document.documentElement.hasAttribute(
 
 // Editor code and styles load only when the owner requests Edit mode.
 (() => {
+ document.querySelectorAll('a[data-owner-editor],a[href="/edit.html"],a[href="/edit"]').forEach(el=>{if(el.closest('footer'))el.remove();});
  const footer=document.querySelector('footer'); if(!footer||document.querySelector('[data-inline-entry]'))return;
- const entry=document.createElement('button');entry.type='button';entry.textContent='Edit this page';entry.dataset.inlineEntry='';entry.className='inline-edit-entry';Object.assign(entry.style,{font:'inherit',color:'inherit',background:'transparent',border:'0',padding:'4px 0',textDecoration:'underline',cursor:'pointer'});
+ const entry=document.createElement('button');entry.type='button';entry.textContent='Owner edit';entry.dataset.inlineEntry='';entry.className='inline-edit-entry';Object.assign(entry.style,{font:'inherit',color:'inherit',background:'transparent',border:'0',padding:'4px 0',textDecoration:'underline',cursor:'pointer'});
  let loaded=false;
  entry.onclick=()=>{
    if(loaded){document.dispatchEvent(new Event('vivian-open-inline-editor'));return;}
@@ -302,3 +305,42 @@ function isInlinePreviewUrl(url) { return document.documentElement.hasAttribute(
  };footer.append(entry);
 })();
 
+
+
+// Saved page appearance uses validated values, never custom HTML or arbitrary CSS.
+function designNumber(value,min,max,fallback){const n=Number(value);return value!==''&&Number.isFinite(n)?Math.max(min,Math.min(max,n)):fallback;}
+function designColor(value){return typeof value==='string'&&/^#[0-9a-f]{6}$/i.test(value)?value:null;}
+function designLink(value){if(typeof value!=='string')return null;if(value.startsWith('#'))return value;try{const u=new URL(value,location.origin);return ['https:','http:','mailto:','tel:'].includes(u.protocol)&&!u.username&&!u.password?u.href:null;}catch{return null;}}
+function registerDesignElements(){
+ const candidates=document.querySelectorAll('[data-setting],header,footer,main em,main a,main li,main section,header .brand,header nav a,header span,footer a,main strong,main small,main span,main h1,main h2,main h3,main p,main .eyebrow,.section-number,.fact small,.fact strong,.travel-note span,.travel-note small,.caption span,footer>span,main a.button,.back-link,.life-stage-nav a,.chapter-nav a,.section-count,.section-card-top>span,main>section,.facts,.section-grid,.meet-grid,.hero .visual,.about-portrait,.travel-note,.life-stage,.contact-group,.contact-grid,main svg text,#page-music .music-toggle');
+ function path(el){if(el.id)return 'id:'+el.id;if(el.dataset.setting)return 'text:'+el.dataset.setting;if(el.dataset.section)return 'chapter:'+el.dataset.section;const parts=[];let current=el;while(current&&current!==document.body){const peers=[...(current.parentElement?.children||[])].filter(node=>node.tagName===current.tagName&&!node.matches('.inline-owner'));parts.unshift(current.tagName.toLowerCase()+':'+(peers.indexOf(current)+1));current=current.parentElement;}return parts.join('/');}
+ for(const el of candidates){if(el.closest('.inline-owner,.journal-card,.contact-circle-card,.meet-version,.world-sky')||el.classList.contains('section-latest')||el.id==='year')continue;
+ if(!el.dataset.designKey)el.dataset.designKey=path(el);
+ const textCandidate=el.matches('a,span,h1,h2,h3,p,small,strong,.eyebrow,.section-number,.travel-note span,.travel-note small,.caption span,footer>span,.section-count,.section-card-top>span,svg text,.music-toggle');
+ if(textCandidate&&el.textContent.trim()&&!el.parentElement?.closest('[data-setting]')&&!el.dataset.setting&&!el.querySelector('[data-setting]')&&!el.querySelector('img,svg,button,iframe')&&!el.matches('.contact-group h2')){el.dataset.setting='visual.'+el.dataset.designKey;el.dataset.designText='';}
+ }
+ return [...document.querySelectorAll('[data-design-key]')].filter(el=>!el.closest('.inline-owner'));
+}
+function applyPageDesign(content){
+ if(!content||typeof content!=='object')return;registerDesignElements();
+ for(const el of document.querySelectorAll('[data-setting]')){const value=content.text?.[el.dataset.setting];if(typeof value==='string'&&el.textContent!==value)el.textContent=value;}
+ const a=content.appearance||{},hero=a.heroCircles||{},contacts=a.contactCircles||{};
+ const width=designNumber(a.pageWidth,720,1800,1280),gap=designNumber(a.sectionGap,8,100,28),font=designNumber(a.baseFontSize,12,24,16),align=['left','center','right'].includes(a.textAlign)?a.textAlign:'left';
+ let css='body{font-size:'+font+'px}header,main,footer{max-width:'+width+'px}main>.about,main>.journal,main>.connect{scroll-margin-top:30px}.section-grid{gap:'+gap+'px}';
+ if(a.textAlign)css+='main h1,main h2,main p{ text-align:'+align+'}';
+ const accent=designColor(a.accentColor);if(accent)css+=':root{--green:'+accent+'}.button{background:'+accent+'}';
+ const panel=designColor(a.panelColor);if(panel){const rgb=[1,3,5].map(i=>parseInt(panel.slice(i,i+2),16)).join(' ');css+=':root{--panel-cream:rgb('+rgb+' / var(--panel-alpha,.55))}';}
+ function circles(settings,target,grid,circle){const columns=designNumber(settings.columns,1,6,target==='hero'?2:4),mobile=designNumber(settings.mobileColumns,1,4,2),size=designNumber(settings.size,48,220,target==='hero'?112:90),spacing=designNumber(settings.gap,0,64,20),justify=['left','center','right'].includes(settings.align)?settings.align:'center',fit=settings.fit==='contain'?'contain':'cover';const margin=justify==='left'?'0 auto 0 0':justify==='right'?'0 0 0 auto':'0 auto';return grid+'{display:grid;grid-template-columns:repeat('+Math.round(columns)+',minmax(0,1fr));gap:'+spacing+'px;max-width:'+((size+spacing)*columns-spacing)+'px;width:100%;margin:'+margin+'}'+circle+'{width:min('+size+'px,100%);height:auto;aspect-ratio:1;justify-self:center}'+circle.split(',').map(s=>s+' img').join(',')+'{object-fit:'+fit+'}@media(max-width:620px){'+grid+'{grid-template-columns:repeat('+Math.round(mobile)+',minmax(0,1fr));max-width:'+((size+spacing)*mobile-spacing)+'px}}';}
+ if(a.heroCircles)css+=circles(hero,'hero','.hero .meet-grid','.hero .meet-circle');
+ if(a.contactCircles)css+=circles(contacts,'contacts','.contact-grid,#home-contact-groups .contact-grid','.contact-logo,#home-contact-groups .contact-logo');
+ if(a.heroCircles){const columns=designNumber(hero.columns,1,6,2),mobile=designNumber(hero.mobileColumns,1,4,2),size=designNumber(hero.size,48,220,112),spacing=designNumber(hero.gap,0,64,20);const height=Math.ceil(4/columns)*(size+spacing+35)+200,mobileHeight=Math.ceil(4/mobile)*(size+spacing+35)+200;css+='.hero .visual:has(.meet-versions){height:'+Math.max(490,height)+'px}@media(max-width:620px){.hero .visual:has(.meet-versions){height:'+Math.max(460,mobileHeight)+'px}}';}
+ const x=designNumber(a.backgroundX,0,100,50),y=designNumber(a.backgroundY,0,100,50),sizing=a.backgroundSize==='contain'?'contain':'cover';if(a.backgroundX!==undefined||a.backgroundY!==undefined||a.backgroundSize)css+='body:before,body[data-category]:before{background-position:'+x+'% '+y+'%;background-size:'+sizing+';background-repeat:no-repeat}';
+ if(a.backgroundWash!==undefined&&typeof content.background==='string'&&content.background){let u;try{u=new URL(content.background.replace(/^\/(world|personal|family|friends|career)-background\.png$/,'/$1-background.jpg'),location.origin);}catch{}if(u&&(['http:','https:'].includes(u.protocol)||(document.documentElement.hasAttribute('data-inline-editing')&&u.protocol==='blob:'))){const wash=designNumber(a.backgroundWash,0,85,25)/100;css+='body:before,body[data-category]:before{background-image:linear-gradient(rgb(251 245 232 / '+wash+'),rgb(251 245 232 / '+wash+')),url('+JSON.stringify(u.href)+')}';}}
+ if(a.hideScenery)css+='.world-sky,.chapter-animation{display:none!important}';
+ for(const el of document.querySelectorAll('[data-design-key]')){const settings=a.elements?.[el.dataset.designKey]||{};const rules=[];const n=(name,min,max,suffix='px')=>{if(settings[name]!==undefined&&settings[name]!==''){const value=designNumber(settings[name],min,max,null);if(value!==null)rules.push(name.replace(/[A-Z]/g,m=>'-'+m.toLowerCase())+':'+value+suffix);}};n('fontSize',9,120);n('marginTop',0,160);n('marginBottom',0,160);n('padding',0,100);n('borderRadius',0,120);n('maxWidth',60,1800);n('lineHeight',.8,3,'');const color=designColor(settings.color),background=designColor(settings.backgroundColor);if(color)rules.push('color:'+color);if(background)rules.push('background-color:'+background);if(['left','center','right'].includes(settings.textAlign))rules.push('text-align:'+settings.textAlign);if(settings.hidden)rules.push('display:none!important');if(rules.length)css+='[data-design-key='+JSON.stringify(el.dataset.designKey)+']{'+rules.map(rule=>rule.includes('!important')?rule:rule+'!important').join(';')+'}';if(el.matches('a')){if(!el.dataset.designOriginalHref)el.dataset.designOriginalHref=el.getAttribute('href')||'';el.setAttribute('href',designLink(settings.href)||el.dataset.designOriginalHref);}}
+ let style=document.getElementById('saved-page-design');if(!style){style=document.createElement('style');style.id='saved-page-design';document.head.append(style);}if(style.textContent!==css)style.textContent=css;
+ if(Array.isArray(a.sectionOrder)){const main=document.querySelector('main');const sections=[...(main?.children||[])].filter(el=>el.matches('section'));const order=[...a.sectionOrder.map(key=>sections.find(el=>el.dataset.designKey===key)).filter(Boolean),...sections.filter(el=>!a.sectionOrder.includes(el.dataset.designKey))];if(order.some((el,index)=>el!==sections[index])){const markers=sections.map(el=>{const marker=document.createComment('section');el.replaceWith(marker);return marker;});markers.forEach((marker,index)=>marker.replaceWith(order[index]));}}
+}
+
+
+let designRefreshPending=false;new MutationObserver(records=>{if(document.documentElement.hasAttribute('data-inline-editing')||designRefreshPending||!window.vivianPageDesignContent)return;if(!records.some(record=>record.type==='childList'&&[...record.addedNodes].some(node=>node.nodeType===1&&!node.closest?.('.inline-owner')&&node.tagName!=='STYLE')))return;designRefreshPending=true;requestAnimationFrame(()=>{designRefreshPending=false;applyPageDesign(window.vivianPageDesignContent);});}).observe(document.body,{childList:true,subtree:true});

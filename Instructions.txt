@@ -1,38 +1,45 @@
-EDIT DIRECTLY ON YOUR WEBSITE
+OWNER EDIT: CONTENT AND LAYOUT
 
-ONE-TIME INSTALLATION
-Upload all three website files from this folder to the root of your GitHub repository:
-- cms-content.js
-- inline-editor.js
-- inline-editor.css
+ONE-TIME UPDATE
+Upload cms-content.js, inline-editor.js and inline-editor.css from this folder to the root of:
 https://github.com/vivianongjy/vivianongjy.github.io/upload/main
-Commit and wait for GitHub Pages to finish publishing. Refresh your website.
-Do not replace content JSON, photos, or posts for this update.
+Commit and wait for GitHub Pages to finish publishing, then refresh your website.
+You do not need to replace any content JSON or uploaded photos.
 
-EVERYDAY USE
-1. Open the page you want to change.
-2. Select Edit this page in the footer.
-3. Enter the same GitHub access key as your posting desk. If you have not created it yet, use Create a repository access key in the sign-in dialog and follow the permission instructions shown there.
-4. Click outlined text and type your changes directly.
-5. Click a homepage circle to edit its photo, label and pop-up message. Click the About me photo or its replacement button to change it.
-6. On Personal, use Edit stage photos or Add memory here in each life stage. On section pages, use Edit memory or Add a memory where the memories appear.
-7. Click a contact circle to edit it; use Add circle or Add contact section to add more. Home and Let’s connect share this contact list.
-8. Appearance & song changes the background, panel opacity and song link.
-9. Apply in a dialog previews changes. Save changes in the toolbar commits them to GitHub. Your public website updates after GitHub Pages finishes publishing.
-10. Exit / discard leaves Edit mode. Confirming discard removes unsaved edits and reloads the normal page.
+ONE ENTRY
+The footer now has only Owner edit. It replaces Owner sign-in and Edit this page.
+Enter your private GitHub repository access key there to edit the current page. Editing controls stay hidden from visitors.
 
-PRIVACY AND SAVING
-Visitors see the normal page and the Edit this page entry button. Editing controls appear only after the editor verifies Vivian’s GitHub account and reads the repository with the supplied key. Real save authorization is enforced by GitHub.
-The access key stays in this tab’s memory. It is not stored in localStorage, cookies, exported files, or website content. Reloading or exiting clears it; re-enter it when editing another page.
-No separate subscription or new hosting service is added.
+DIRECT CONTENT EDITING
+Click outlined text to edit it. This now includes previously fixed headings, captions, navigation labels, family counters and other page text.
+Use existing photo controls for portraits, life stages, memories, app logos and background uploads.
+Click a contact circle to edit its app logo/link. Move circle left/up or right/down changes its order.
+Background & song updates the background image, panel opacity and song.
 
-Saves update the GitHub site, not the separate laptop/TryCloudflare data copy.
-If another editor or Pages CMS changes the same file, the save is rejected instead of silently overwriting it. The draft remains visible. Copy important unsaved text before discarding and reloading.
-A save involving several files can publish earlier files even if a later file fails. The status identifies partial saves; remaining changes stay unsaved.
+LAYOUT
+- Set circle columns separately for desktop and mobile.
+- Adjust circle diameter, gap, left/center/right alignment and fill/whole-photo fit.
+- Reorder the four homepage portraits.
+- Position the background horizontally/vertically, choose fill or full-image fit, and adjust its light overlay.
+- Change page width, base text size, overall text alignment, accent and panel colors, and chapter-card spacing.
+- Show/hide decorative scenery.
+- Move page sections up/down.
 
-FIRST-TIME KEY SETUP (if your posting desk is not installed yet)
-Go to https://github.com/settings/personal-access-tokens/new
-Use a fine-grained token with resource owner vivianongjy, only repository vivianongjy.github.io, and Contents = Read and write. Choose an expiration date, generate it, and paste it only into the website's sign-in box. Keep it private.
+EDIT ANY ITEM
+Select a page item to edit its text or destination link where applicable. Adjust its text size, color, alignment, line spacing, outside/inside spacing, rounding, maximum width, or visibility. Reset this item's styling restores its theme styling.
+Hidden items remain available in the selector so you can show them again.
+Use this for headings, navigation, captions, panels, sections and other parts without their own dedicated editor.
+App circles, photo galleries and memories keep their dedicated editing controls.
 
-VERIFICATION
-Owner checks, inline text, photo previews/uploads, new memories, contact edits, stage photos, life-stage posting, stale-save protection, mobile layout, and exiting were tested with a simulated GitHub API. No real repository writes were made during testing. Live publishing needs your one-time installation and access key.
+APPLY AND SAVE
+Apply previews changes on the page; it does not publish them.
+Save changes publishes your edited content and appearance through GitHub.
+After GitHub Pages finishes publishing, visitors see the saved changes.
+Exit / discard leaves Edit mode and removes any unsaved edits after confirmation.
+Your access key stays in tab memory and is cleared on reload/exit. Re-enter it on another page.
+
+SCOPE
+These controls edit website content and supported layout/style properties. They do not edit the source code, behavior inside Spotify/YouTube players, or the individual strokes in an illustration. Backgrounds and logos can be replaced with your own images.
+
+TESTING
+Simulated GitHub tests verified content saves, circle size/alignment/columns, mobile layout, background positioning, section order, individual text/styles, visitor rendering after saving, owner-only controls, photo upload, contact editing, personal stages, conflict protection and exiting. No real repository content was changed during testing.
