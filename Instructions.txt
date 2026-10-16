@@ -1,36 +1,38 @@
-YOUR WEBSITE'S OWN POSTING DESK
+EDIT DIRECTLY ON YOUR WEBSITE
 
 ONE-TIME INSTALLATION
-Upload edit.html, editor.js, editor.css and cms-content.js from this folder to the root of:
+Upload all three website files from this folder to the root of your GitHub repository:
+- cms-content.js
+- inline-editor.js
+- inline-editor.css
 https://github.com/vivianongjy/vivianongjy.github.io/upload/main
-Commit and wait for GitHub Pages to finish publishing.
-Do not upload an old posts.json or content JSON file. Your existing memories stay in place.
-This editor uses the current JSON-based website setup; install any previous connect/music features you still want first.
-
-OPEN YOUR DESK
-Go to https://vivianongjy.github.io/edit.html or select Owner sign-in in your website footer.
-
-ONE-TIME ACCESS KEY SETUP
-1. On the posting desk, expand First-time setup and select Create a fine-grained GitHub access key.
-2. Resource owner: vivianongjy.
-3. Choose an expiration date. Under Repository access choose Only select repositories, then vivianongjy.github.io.
-4. Repository permissions: Contents = Read and write. Metadata read access is included by GitHub.
-5. Generate the key. Paste it into the access-key box on your posting desk, not into chat.
-Keep the key in your password manager for future sign-ins. Replace it when it expires.
-The editor keeps it only in tab memory; it does not save it in localStorage, cookies, website files or uploaded content.
+Commit and wait for GitHub Pages to finish publishing. Refresh your website.
+Do not replace content JSON, photos, or posts for this update.
 
 EVERYDAY USE
-Posts & photos: add a memory, choose a section and optional life stage, add photos and Publish memory. Edit/delete existing memories below.
-Page settings: choose a page and Load page settings. Edit the text, song link, background, homepage photos/four versions, or personal life-stage photos. Save page changes.
-Contact circles: Load contact circles, add sections/apps, edit their links and Save contact circles. Both homepage and connect page share this list.
+1. Open the page you want to change.
+2. Select Edit this page in the footer.
+3. Enter the same GitHub access key as your posting desk. If you have not created it yet, use Create a repository access key in the sign-in dialog and follow the permission instructions shown there.
+4. Click outlined text and type your changes directly.
+5. Click a homepage circle to edit its photo, label and pop-up message. Click the About me photo or its replacement button to change it.
+6. On Personal, use Edit stage photos or Add memory here in each life stage. On section pages, use Edit memory or Add a memory where the memories appear.
+7. Click a contact circle to edit it; use Add circle or Add contact section to add more. Home and Let’s connect share this contact list.
+8. Appearance & song changes the background, panel opacity and song link.
+9. Apply in a dialog previews changes. Save changes in the toolbar commits them to GitHub. Your public website updates after GitHub Pages finishes publishing.
+10. Exit / discard leaves Edit mode. Confirming discard removes unsaved edits and reloads the normal page.
 
-After saving, GitHub Pages needs time to publish. Saving here updates the GitHub site, not the separate laptop/TryCloudflare data copy.
-Anyone can see the Owner sign-in link, but an authorized GitHub key is required to change files. The editor also checks that the GitHub login is vivianongjy.
-No separate subscription or new hosting service is added. Existing GitHub usage limits still apply.
+PRIVACY AND SAVING
+Visitors see the normal page and the Edit this page entry button. Editing controls appear only after the editor verifies Vivian’s GitHub account and reads the repository with the supplied key. Real save authorization is enforced by GitHub.
+The access key stays in this tab’s memory. It is not stored in localStorage, cookies, exported files, or website content. Reloading or exiting clears it; re-enter it when editing another page.
+No separate subscription or new hosting service is added.
 
-Photos are resized before upload. Dates remain optional. The editor detects conflicting saves rather than silently replacing newer files.
-Page settings and contact changes load complete JSON files and preserve unrelated fields.
-If saving fails, your draft stays in the tab. Do not reload until you have copied any important unsaved text.
+Saves update the GitHub site, not the separate laptop/TryCloudflare data copy.
+If another editor or Pages CMS changes the same file, the save is rejected instead of silently overwriting it. The draft remains visible. Copy important unsaved text before discarding and reloading.
+A save involving several files can publish earlier files even if a later file fails. The status identifies partial saves; remaining changes stay unsaved.
 
-TESTING
-The interface and authenticated read/write flow were tested with a simulated GitHub API. Live publishing needs your access key and installation; no real repository edits were made during tests.
+FIRST-TIME KEY SETUP (if your posting desk is not installed yet)
+Go to https://github.com/settings/personal-access-tokens/new
+Use a fine-grained token with resource owner vivianongjy, only repository vivianongjy.github.io, and Contents = Read and write. Choose an expiration date, generate it, and paste it only into the website's sign-in box. Keep it private.
+
+VERIFICATION
+Owner checks, inline text, photo previews/uploads, new memories, contact edits, stage photos, life-stage posting, stale-save protection, mobile layout, and exiting were tested with a simulated GitHub API. No real repository writes were made during testing. Live publishing needs your one-time installation and access key.

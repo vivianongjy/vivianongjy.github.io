@@ -50,7 +50,7 @@ function renderLifeStagePhotos(content) {
     for (const [index, photo] of photos.entries()) {
       if (typeof photo !== 'string' || !photo.trim()) continue;
       let url; try { url = new URL(photo, window.location.origin); } catch { continue; }
-      if (!['http:', 'https:'].includes(url.protocol)) continue;
+      if (!(['http:', 'https:'].includes(url.protocol) || isInlinePreviewUrl(url))) continue;
       const link = document.createElement('a'); link.href = url.href; link.target = '_blank'; link.rel = 'noopener noreferrer';
       link.setAttribute('aria-label', 'Open ' + label + ' photo ' + (index + 1));
       const image = document.createElement('img'); image.src = url.href; image.alt = label + ' memory, photo ' + (index + 1); image.loading = 'lazy'; image.decoding = 'async';
@@ -67,7 +67,7 @@ function renderHomePortrait(content) {
   column?.querySelector('.about-portrait')?.remove();
   if (typeof content.portrait !== 'string' || !content.portrait.trim()) return;
   let url; try { url = new URL(content.portrait, location.origin); } catch { return; }
-  if (!['http:', 'https:'].includes(url.protocol)) return;
+  if (!(['http:', 'https:'].includes(url.protocol) || isInlinePreviewUrl(url))) return;
   if (!column) {
     const label = about.querySelector(':scope > .section-number');
     if (!label) return;
@@ -91,7 +91,7 @@ function renderHeroPortrait(content) {
   const source = content.heroPortrait || content.portrait;
   if (typeof source !== 'string' || !source.trim()) return;
   let url; try { url = new URL(source, location.origin); } catch { return; }
-  if (!['http:', 'https:'].includes(url.protocol)) return;
+  if (!(['http:', 'https:'].includes(url.protocol) || isInlinePreviewUrl(url))) return;
   const figure = document.createElement('figure'); figure.className = 'hero-portrait';
   const image = document.createElement('img'); image.src = url.href; image.alt = content.heroPortraitAlt || content.portraitAlt || 'Vivian Ong'; image.decoding = 'async'; image.fetchPriority = 'high'; image.width = 220; image.height = 220;
   figure.append(image); visual.prepend(figure); visual.removeAttribute('role'); visual.removeAttribute('aria-label');
@@ -121,7 +121,7 @@ function renderMeetVersions(content) {
   dialog.append(close, title, photo, message); document.body.append(dialog);
   dialog.addEventListener('click', event => { const r = dialog.getBoundingClientRect(); if (event.target === dialog && (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom)) dialog.close(); });
   let trigger; dialog.addEventListener('close', () => trigger?.focus());
-  const safePhoto = value => { if (typeof value !== 'string' || !value.trim()) return ''; try { const url = new URL(value, location.origin); return ['http:', 'https:'].includes(url.protocol) ? url.href : ''; } catch { return ''; } };
+  const safePhoto = value => { if (typeof value !== 'string' || !value.trim()) return ''; try { const url = new URL(value, location.origin); return (['http:', 'https:'].includes(url.protocol) || isInlinePreviewUrl(url)) ? url.href : ''; } catch { return ''; } };
   for (let index = 0; index < 4; index++) {
     const version = content.meetVersions?.[index] || {};
     const label = typeof version.label === 'string' && version.label.trim() ? version.label : 'Version ' + (index + 1);
@@ -238,7 +238,7 @@ function renderConnectPage(content, container = document.querySelector('#contact
       const card = document.createElement(url ? 'a' : 'div'); card.className = 'contact-circle-card';
       if (url) { card.href = url.href; if (['https:','http:'].includes(url.protocol)) { card.target = '_blank'; card.rel = 'noopener noreferrer'; } }
       const circle = document.createElement('span'); circle.className = 'contact-logo'; circle.dataset.app = item.app || 'other'; circle.setAttribute('aria-hidden','true');
-      let logo; try { if(item.logo) { const u = new URL(item.logo,location.origin); if(['https:','http:'].includes(u.protocol)) logo = u.href; } } catch {}
+      let logo; try { if(item.logo) { const u = new URL(item.logo,location.origin); if(['https:','http:'].includes(u.protocol) || isInlinePreviewUrl(u)) logo = u.href; } } catch {}
       if (logo) { const image=document.createElement('img');image.src=logo;image.alt='';image.width=40;image.height=40;circle.append(image); }
       else { const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 32 32');svg.innerHTML=icons[item.app] || icons.other;circle.append(svg); }
       const label=document.createElement('strong');label.textContent=item.label || item.app || 'Connect';
@@ -287,3 +287,18 @@ if (!document.querySelector('a[data-owner-editor]')) {
  const footer = document.querySelector('footer');
  if (footer) { const link = document.createElement('a'); link.href='/edit.html'; link.textContent='Owner sign-in'; link.dataset.ownerEditor=''; footer.append(link); }
 }
+
+function isInlinePreviewUrl(url) { return document.documentElement.hasAttribute('data-inline-editing') && url.protocol === 'blob:' && url.origin === location.origin; }
+
+// Editor code and styles load only when the owner requests Edit mode.
+(() => {
+ const footer=document.querySelector('footer'); if(!footer||document.querySelector('[data-inline-entry]'))return;
+ const entry=document.createElement('button');entry.type='button';entry.textContent='Edit this page';entry.dataset.inlineEntry='';entry.className='inline-edit-entry';Object.assign(entry.style,{font:'inherit',color:'inherit',background:'transparent',border:'0',padding:'4px 0',textDecoration:'underline',cursor:'pointer'});
+ let loaded=false;
+ entry.onclick=()=>{
+   if(loaded){document.dispatchEvent(new Event('vivian-open-inline-editor'));return;}
+   if(!document.querySelector('link[data-inline-editor-style]')){const style=document.createElement('link');style.rel='stylesheet';style.href='/inline-editor.css';style.dataset.inlineEditorStyle='';document.head.append(style);}
+   entry.disabled=true;const script=document.createElement('script');script.src='/inline-editor.js';script.onload=()=>{loaded=true;entry.disabled=false;};script.onerror=()=>{entry.disabled=false;script.remove();alert('The page editor could not load. Refresh and try again.');};document.head.append(script);
+ };footer.append(entry);
+})();
+
