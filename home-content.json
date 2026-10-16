@@ -35,5 +35,31 @@
       "label": "little Vivian in elementary school!",
       "message": "I used to play so much of chess! hellu my childhood friend! I hope you no longer remembers this before puberty \"face\" of my life. it has been a long long time, hope we get to catch up soon!"
     }
-  ]
+  ],
+  "appearance": {
+    "positions": {
+      "desktop": {
+        "text:visual.main:1/section:1/div:3/div:1/section:1/h2:1": {
+          "xPercent": -8.13,
+          "y": 0
+        },
+        "portrait:0": {
+          "xPercent": -17.97,
+          "y": 0
+        },
+        "portrait:1": {
+          "xPercent": -17.76,
+          "y": 0
+        },
+        "portrait:2": {
+          "xPercent": -15.43,
+          "y": 0
+        },
+        "portrait:3": {
+          "xPercent": -16.59,
+          "y": 0
+        }
+      }
+    }
+  }
 }
