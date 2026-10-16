@@ -297,15 +297,18 @@ function isInlinePreviewUrl(url) { return document.documentElement.hasAttribute(
 // Editor code and styles load only when the owner requests Edit mode.
 (() => {
  document.querySelectorAll('a[data-owner-editor],a[href="/edit.html"],a[href="/edit"]').forEach(el=>{if(el.closest('footer'))el.remove();});
- const footer=document.querySelector('footer'); if(!footer||document.querySelector('[data-inline-entry]'))return;
- const entry=document.createElement('button');entry.type='button';entry.textContent='Owner edit';entry.dataset.inlineEntry='';entry.className='inline-edit-entry';Object.assign(entry.style,{font:'inherit',color:'inherit',background:'transparent',border:'0',padding:'4px 0',textDecoration:'underline',cursor:'pointer'});
+ const footer=document.querySelector('footer'); if(document.querySelector('[data-inline-entry]'))return;
+ if(footer){const copyright=document.createElement('span');copyright.textContent='© 2026 Vivian Ong';const note=document.createElement('span');note.className='footer-note';note.textContent='From Malaysia, with love. Based in NYC.';footer.replaceChildren(copyright,note);}
+ const style=document.createElement('style');style.id='floating-owner-style';style.textContent='.owner-edit-floating{position:fixed;right:18px;bottom:64px;z-index:6;font:12px "DM Sans",system-ui,sans-serif;border:1px solid #b4c0a4;background:#fffaf0ed;color:#3c593f;box-shadow:0 3px 15px #314b351a;border-radius:30px;padding:10px 15px;min-height:38px;cursor:pointer}.owner-edit-floating:focus-visible{outline:3px solid #b88636;outline-offset:3px}footer{justify-content:space-between;gap:16px}footer .footer-note{margin-left:auto;text-align:right;justify-content:flex-end}html[data-inline-editing] .owner-edit-floating{display:none}@media(max-width:620px){.owner-edit-floating{right:12px;bottom:58px;font-size:11px}}';document.head.append(style);
+ const entry=document.createElement('button');entry.type='button';entry.textContent='Owner edit';entry.dataset.inlineEntry='';entry.className='inline-edit-entry owner-edit-floating';
  let loaded=false;
  entry.onclick=()=>{
    if(loaded){document.dispatchEvent(new Event('vivian-open-inline-editor'));return;}
    if(!document.querySelector('link[data-inline-editor-style]')){const style=document.createElement('link');style.rel='stylesheet';style.href='/inline-editor.css';style.dataset.inlineEditorStyle='';document.head.append(style);}
    entry.disabled=true;const script=document.createElement('script');script.src='/inline-editor.js';script.onload=()=>{loaded=true;entry.disabled=false;};script.onerror=()=>{entry.disabled=false;script.remove();alert('The page editor could not load. Refresh and try again.');};document.head.append(script);
- };footer.append(entry);
+ };document.body.append(entry);
 })();
+
 
 
 
