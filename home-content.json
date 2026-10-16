@@ -58,6 +58,14 @@
         "portrait:3": {
           "xPercent": -16.59,
           "y": 0
+        },
+        "text:visual.main:1/section:1/div:2/div:1/button:1": {
+          "xPercent": 0,
+          "y": -25
+        },
+        "box:main:1/section:1": {
+          "xPercent": 0,
+          "y": 0
         }
       }
     }
