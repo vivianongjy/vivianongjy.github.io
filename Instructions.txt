@@ -1,15 +1,36 @@
-PERFORMANCE UPDATE
+YOUR WEBSITE'S OWN POSTING DESK
 
-Upload every file in this folder except Instructions.txt to the root of your GitHub repository:
+ONE-TIME INSTALLATION
+Upload edit.html, editor.js, editor.css and cms-content.js from this folder to the root of:
 https://github.com/vivianongjy/vivianongjy.github.io/upload/main
-Commit, wait for GitHub Pages to finish publishing, and refresh.
+Commit and wait for GitHub Pages to finish publishing.
+Do not upload an old posts.json or content JSON file. Your existing memories stay in place.
+This editor uses the current JSON-based website setup; install any previous connect/music features you still want first.
 
-The five background display files are 81% smaller in total.
-The current About me display photo is reduced from 2.96 MB to 54 KB.
-Small homepage circles use smaller photo copies; their pop-ups still use the original images.
-Decorative animations pause outside the viewport and when the browser tab is hidden.
-Existing original uploads and content JSON are preserved. No Pages CMS configuration changes are needed.
+OPEN YOUR DESK
+Go to https://vivianongjy.github.io/edit.html or select Owner sign-in in your website footer.
 
-Future uploads: resize photos to about 1200–1600 pixels along the longest edge and save as JPEG or WebP. Aim for under 300–500 KB each where practical. Small circle photos can be 320–500 pixels. Custom background uploads also benefit from compression.
+ONE-TIME ACCESS KEY SETUP
+1. On the posting desk, expand First-time setup and select Create a fine-grained GitHub access key.
+2. Resource owner: vivianongjy.
+3. Choose an expiration date. Under Repository access choose Only select repositories, then vivianongjy.github.io.
+4. Repository permissions: Contents = Read and write. Metadata read access is included by GitHub.
+5. Generate the key. Paste it into the access-key box on your posting desk, not into chat.
+Keep the key in your password manager for future sign-ins. Replace it when it expires.
+The editor keeps it only in tab memory; it does not save it in localStorage, cookies, website files or uploaded content.
 
-This does not measure or guarantee a specific loading-time improvement. Network speed and the visitor's device still matter.
+EVERYDAY USE
+Posts & photos: add a memory, choose a section and optional life stage, add photos and Publish memory. Edit/delete existing memories below.
+Page settings: choose a page and Load page settings. Edit the text, song link, background, homepage photos/four versions, or personal life-stage photos. Save page changes.
+Contact circles: Load contact circles, add sections/apps, edit their links and Save contact circles. Both homepage and connect page share this list.
+
+After saving, GitHub Pages needs time to publish. Saving here updates the GitHub site, not the separate laptop/TryCloudflare data copy.
+Anyone can see the Owner sign-in link, but an authorized GitHub key is required to change files. The editor also checks that the GitHub login is vivianongjy.
+No separate subscription or new hosting service is added. Existing GitHub usage limits still apply.
+
+Photos are resized before upload. Dates remain optional. The editor detects conflicting saves rather than silently replacing newer files.
+Page settings and contact changes load complete JSON files and preserve unrelated fields.
+If saving fails, your draft stays in the tab. Do not reload until you have copied any important unsaved text.
+
+TESTING
+The interface and authenticated read/write flow were tested with a simulated GitHub API. Live publishing needs your access key and installation; no real repository edits were made during tests.

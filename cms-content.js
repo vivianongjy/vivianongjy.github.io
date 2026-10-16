@@ -281,3 +281,9 @@ function fastDisplayImage(source) {
  const images = {"/uploads/img2027original.jpeg":"/fast-portrait-1.jpg","/uploads/1746454297686.jpeg":"/fast-portrait-2.jpg","/uploads/img0627original-2.jpg":"/fast-portrait-3.jpg","/uploads/img5927.jpg":"/fast-portrait-4.jpg","/uploads/img5928-2.jpg":"/fast-portrait-5.jpg"};
  try { const url = new URL(source,location.origin); return url.origin === location.origin && images[url.pathname] ? images[url.pathname] : source; } catch { return source; }
 }
+
+// The owner editor authenticates against GitHub; this link grants no editing access.
+if (!document.querySelector('a[data-owner-editor]')) {
+ const footer = document.querySelector('footer');
+ if (footer) { const link = document.createElement('a'); link.href='/edit.html'; link.textContent='Owner sign-in'; link.dataset.ownerEditor=''; footer.append(link); }
+}
