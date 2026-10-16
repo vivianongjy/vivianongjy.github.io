@@ -265,6 +265,7 @@ async function renderHomeConnect() {
     if (!response.ok) throw new Error('Unable to load contact links');
     const content = await response.json();
     if (!Array.isArray(content.groups)) return;
+    window.vivianContactDesignContent=content;
     const container = document.createElement('div'); container.id = 'home-contact-groups';
     renderConnectPage(content, container);
     const previous = section.querySelector('.socials, #home-contact-groups');
@@ -307,6 +308,7 @@ function isInlinePreviewUrl(url) { return document.documentElement.hasAttribute(
 
 
 
+
 // Saved page appearance uses validated values, never custom HTML or arbitrary CSS.
 function designNumber(value,min,max,fallback){const n=Number(value);return value!==''&&Number.isFinite(n)?Math.max(min,Math.min(max,n)):fallback;}
 function designColor(value){return typeof value==='string'&&/^#[0-9a-f]{6}$/i.test(value)?value:null;}
@@ -340,7 +342,35 @@ function applyPageDesign(content){
  for(const el of document.querySelectorAll('[data-design-key]')){const settings=a.elements?.[el.dataset.designKey]||{};const rules=[];const n=(name,min,max,suffix='px')=>{if(settings[name]!==undefined&&settings[name]!==''){const value=designNumber(settings[name],min,max,null);if(value!==null)rules.push(name.replace(/[A-Z]/g,m=>'-'+m.toLowerCase())+':'+value+suffix);}};n('fontSize',9,120);n('marginTop',0,160);n('marginBottom',0,160);n('padding',0,100);n('borderRadius',0,120);n('maxWidth',60,1800);n('lineHeight',.8,3,'');const color=designColor(settings.color),background=designColor(settings.backgroundColor);if(color)rules.push('color:'+color);if(background)rules.push('background-color:'+background);if(['left','center','right'].includes(settings.textAlign))rules.push('text-align:'+settings.textAlign);if(settings.hidden)rules.push('display:none!important');if(rules.length)css+='[data-design-key='+JSON.stringify(el.dataset.designKey)+']{'+rules.map(rule=>rule.includes('!important')?rule:rule+'!important').join(';')+'}';if(el.matches('a')){if(!el.dataset.designOriginalHref)el.dataset.designOriginalHref=el.getAttribute('href')||'';el.setAttribute('href',designLink(settings.href)||el.dataset.designOriginalHref);}}
  let style=document.getElementById('saved-page-design');if(!style){style=document.createElement('style');style.id='saved-page-design';document.head.append(style);}if(style.textContent!==css)style.textContent=css;
  if(Array.isArray(a.sectionOrder)){const main=document.querySelector('main');const sections=[...(main?.children||[])].filter(el=>el.matches('section'));const order=[...a.sectionOrder.map(key=>sections.find(el=>el.dataset.designKey===key)).filter(Boolean),...sections.filter(el=>!a.sectionOrder.includes(el.dataset.designKey))];if(order.some((el,index)=>el!==sections[index])){const markers=sections.map(el=>{const marker=document.createComment('section');el.replaceWith(marker);return marker;});markers.forEach((marker,index)=>marker.replaceWith(order[index]));}}
+ applyDirectPositions(content);
 }
+function registerDirectPositions(content){
+ registerDesignElements();
+ document.querySelectorAll('.meet-version').forEach((el,index)=>el.dataset.positionKey='portrait:'+index);
+ const contactData=document.body.dataset.category==='connect'?content:window.vivianContactDesignContent;
+ const containers=document.querySelectorAll('#contact-groups,#home-contact-groups');
+ containers.forEach(container=>container.querySelectorAll('.contact-group').forEach((group,gi)=>{const source=contactData?.groups?.[gi]?.links||[];const visible=source.map((link,index)=>({link,index})).filter(v=>v.link.visible!==false);group.querySelectorAll('.contact-circle-card').forEach((el,index)=>el.dataset.positionKey='contact:'+gi+':'+(visible[index]?.index??index));}));
+ document.querySelectorAll('.section-card,.journal-card,.travel-note,.about-portrait,.contact-group,.life-stage,main>section,.life-stage-photos a').forEach(el=>{if(el.classList.contains('journal-card')&&(el.dataset.inlinePost||el.dataset.postId))el.dataset.positionKey='memory:'+(el.dataset.inlinePost||el.dataset.postId);else if(el.dataset.designKey)el.dataset.positionKey='box:'+el.dataset.designKey;});
+ return [...document.querySelectorAll('[data-position-key]')].filter(el=>!el.closest('.inline-owner'));
+}
+function applyDirectPositions(content){
+ const small=matchMedia('(max-width:620px)').matches,mode=small?'mobile':'desktop';
+ for(const el of registerDirectPositions(content)){
+  const point=content.appearance?.positions?.[mode]?.[el.dataset.positionKey];
+  if(!point){el.style.removeProperty('translate');continue;}
+  const width=Math.max(1,directPositionBoundary(el).getBoundingClientRect().width),x=designNumber(point.xPercent,-100,100,0)*width/100,y=designNumber(point.y,-2400,2400,0);
+  el.style.translate='0px 0px';const boundary=directPositionBoundary(el).getBoundingClientRect(),r=el.getBoundingClientRect();const safeX=Math.max(boundary.left-r.left,Math.min(boundary.right-r.right,x)),safeY=Math.max(boundary.top-r.top,Math.min(boundary.bottom-r.bottom,y));el.style.translate=safeX+'px '+safeY+'px';
+ }
+}
+function directPositionBoundary(el){
+ if(el.matches('.meet-version'))return el.closest('.visual')||el.parentElement;
+ if(el.matches('.contact-circle-card'))return el.closest('.contact-group')||el.parentElement;
+ if(el.matches('.section-card,.journal-card,.travel-note,.about-portrait,.contact-group,.life-stage'))return el.closest('main')||el.parentElement;
+ 
+ return el.parentElement;
+}
+
+let directResizePending=false;window.addEventListener('resize',()=>{if(directResizePending||document.documentElement.hasAttribute('data-inline-editing'))return;directResizePending=true;requestAnimationFrame(()=>{directResizePending=false;if(window.vivianPageDesignContent)applyDirectPositions(window.vivianPageDesignContent);});});
 
 
 let designRefreshPending=false;new MutationObserver(records=>{if(document.documentElement.hasAttribute('data-inline-editing')||designRefreshPending||!window.vivianPageDesignContent)return;if(!records.some(record=>record.type==='childList'&&[...record.addedNodes].some(node=>node.nodeType===1&&!node.closest?.('.inline-owner')&&node.tagName!=='STYLE')))return;designRefreshPending=true;requestAnimationFrame(()=>{designRefreshPending=false;applyPageDesign(window.vivianPageDesignContent);});}).observe(document.body,{childList:true,subtree:true});

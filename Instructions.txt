@@ -1,45 +1,29 @@
-OWNER EDIT: CONTENT AND LAYOUT
+DRAG AND CLICK DIRECTLY
 
-ONE-TIME UPDATE
-Upload cms-content.js, inline-editor.js and inline-editor.css from this folder to the root of:
+Upload these four files to the root of your GitHub repository:
+cms-content.js
+inline-editor.js
+inline-editor.css
+journal.js
 https://github.com/vivianongjy/vivianongjy.github.io/upload/main
-Commit and wait for GitHub Pages to finish publishing, then refresh your website.
-You do not need to replace any content JSON or uploaded photos.
+Commit, wait for GitHub Pages to finish publishing, and refresh your website.
+Existing content JSON, layouts, photos, songs and contacts are preserved.
 
-ONE ENTRY
-The footer now has only Owner edit. It replaces Owner sign-in and Edit this page.
-Enter your private GitHub repository access key there to edit the current page. Editing controls stay hidden from visitors.
+USE
+1. Select Owner edit and enter your usual website access key.
+2. Click a portrait circle, contact circle, photo, memory card or box to open its editor. Click outlined text to type directly.
+3. Drag a circle to move it within its visual/contact section. Drag boxes across the main page area. On a phone, drag circles directly and drag boxes by the dotted top edge; scroll from the rest of the page.
+4. Use Undo move to reverse the last movement. Click a moved item and choose Reset position to return it to its normal place.
+5. Save changes publishes the arrangement and content changes. Nothing is published just by dragging.
+6. Exit / discard leaves the owner editor and clears the key when the page reloads.
 
-DIRECT CONTENT EDITING
-Click outlined text to edit it. This now includes previously fixed headings, captions, navigation labels, family counters and other page text.
-Use existing photo controls for portraits, life stages, memories, app logos and background uploads.
-Click a contact circle to edit its app logo/link. Move circle left/up or right/down changes its order.
-Background & song updates the background image, panel opacity and song.
+Desktop and phone positions are stored separately. Arrange the phone view separately if you want a custom phone layout. Keyboard users can focus an item and use Alt + arrow keys to move it (Shift for finer steps); Escape resets its position.
 
-LAYOUT
-- Set circle columns separately for desktop and mobile.
-- Adjust circle diameter, gap, left/center/right alignment and fill/whole-photo fit.
-- Reorder the four homepage portraits.
-- Position the background horizontally/vertically, choose fill or full-image fit, and adjust its light overlay.
-- Change page width, base text size, overall text alignment, accent and panel colors, and chapter-card spacing.
-- Show/hide decorative scenery.
-- Move page sections up/down.
+The repeated per-item edit buttons and Layout shortcut are hidden/removed from the page editing flow. Advanced item styling remains in the box editor; circle appearance settings are available from a portrait circle's editor. Background & song and Add memory remain in the owner toolbar.
 
-EDIT ANY ITEM
-Select a page item to edit its text or destination link where applicable. Adjust its text size, color, alignment, line spacing, outside/inside spacing, rounding, maximum width, or visibility. Reset this item's styling restores its theme styling.
-Hidden items remain available in the selector so you can show them again.
-Use this for headings, navigation, captions, panels, sections and other parts without their own dedicated editor.
-App circles, photo galleries and memories keep their dedicated editing controls.
+MOVEMENT
+Moving items changes their visual positions; the page still keeps their original space in its normal flow. Items can overlap if you place them on top of each other. Reset or Undo restores their position. Movement is bounded to the main page or the circle's section to avoid moving items off the page.
 
-APPLY AND SAVE
-Apply previews changes on the page; it does not publish them.
-Save changes publishes your edited content and appearance through GitHub.
-After GitHub Pages finishes publishing, visitors see the saved changes.
-Exit / discard leaves Edit mode and removes any unsaved edits after confirmation.
-Your access key stays in tab memory and is cleared on reload/exit. Re-enter it on another page.
+Visitor pages show only the saved arrangement, with no drag edges or editing controls. GitHub authorization is still required for saving. Your key is kept only in tab memory.
 
-SCOPE
-These controls edit website content and supported layout/style properties. They do not edit the source code, behavior inside Spotify/YouTube players, or the individual strokes in an illustration. Backgrounds and logos can be replaced with your own images.
-
-TESTING
-Simulated GitHub tests verified content saves, circle size/alignment/columns, mobile layout, background positioning, section order, individual text/styles, visitor rendering after saving, owner-only controls, photo upload, contact editing, personal stages, conflict protection and exiting. No real repository content was changed during testing.
+Verification used a simulated GitHub API, including mouse/touch movement, direct clicking, undo, explicit saving, independent phone positions, and visitor rendering. No real repository content was changed during testing.

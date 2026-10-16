@@ -33,7 +33,7 @@ async function loadJournal() {
       return;
     }
     for (const post of posts) {
-      const article = element('article', '', 'journal-card');
+      const article = element('article', '', 'journal-card'); article.dataset.postId=post.id;
       if (post.images.length) {
         const photos = element('div', '', 'journal-photos');
         for (const [index, src] of post.images.entries()) {
