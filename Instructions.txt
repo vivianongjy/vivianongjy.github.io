@@ -1,26 +1,37 @@
-BUISNESS SECTION — EMPTY SHOP SETUP
+SHOP + DARK MODE + EDITOR FIXES
 
-Upload all seven website files in this folder to the root of:
+Upload the seven website files from this folder to your GitHub repository root:
 https://github.com/vivianongjy/vivianongjy.github.io/upload/main
-Commit, wait for GitHub Pages publishing, then refresh.
+Commit the changes, wait for GitHub Pages to finish publishing, then refresh.
 
-Buisness appears after Career on all pages. Open /business.html.
-Use Owner edit with your existing repository access key:
-- Add product: name, description, price, category and photo.
-- Shop settings: currency, inquiry email, delivery and return terms.
-- Shop settings also lists all products, including hidden products, for editing.
-- Apply changes previews them. Save changes publishes to GitHub.
+This update does not include business-content.json, so existing products and shop
+settings are preserved. If you have never installed the shop, first install the
+business-section-update package, then upload this update. Never replace your live
+business-content.json with the empty starter after adding products.
 
-Order inquiries start CLOSED. Add your actual seller contact, delivery information
-and return terms, then choose Yes under Accept email order inquiries and save.
-Customers can build a basket and open an email inquiry. No payment is collected,
-no order is confirmed automatically, and no stock is reserved. Confirm final
-availability, delivery, taxes and payment arrangements directly with the buyer.
+DARK MODE
+Portrait circle captions, placeholder numbers, pop-up messages and contact labels
+now follow the theme. Contact logos use a light badge for readable brand colors,
+including custom uploaded logos. Switching back restores light-mode styling.
 
-This version does not have online card payments, automatic shipping labels,
-real-time inventory, order confirmations or a private order database. Those
-require choosing and connecting a commerce/payment service.
+OWNER EDIT
+Selected item controls now appear at the top, away from the bottom edit toolbar.
+They wrap on mobile and hide while an editing dialog is open.
 
-No existing posts, photos or other page content JSON needs to be replaced.
-Includes the pending light/dark mode update.
-Do not re-upload business-content.json after adding real products: it is your live catalogue.
+HOW TO ADD PRODUCTS
+1. Open business.html and press Owner edit. Sign in using your existing owner key.
+2. Your shop desk appears above the search bar. Open Shop settings first.
+3. Select your currency. Add an inquiry email, delivery regions/cost/timing and
+   your return/cancellation terms. Keep inquiries closed while preparing.
+4. Press Add product. Enter its name, price (e.g. 24.50), description, collection,
+   optional SKU/product reference, photo, and availability.
+5. Press Apply product to preview. Repeat for more products.
+6. Press Save changes in the bottom toolbar to save to GitHub. Wait for Pages
+   publishing, then refresh to verify the visitor view.
+7. Edit products from the shop desk list, including hidden and sold-out products.
+8. When ready, open Shop settings, enable email order inquiries, Apply and Save.
+
+A basket inquiry opens the customer's email app. It does not take payment,
+reserve stock, confirm an order, or send email without the customer sending it.
+Online card checkout, automated taxes/shipping and order management still require
+choosing and connecting a commerce/payment provider.

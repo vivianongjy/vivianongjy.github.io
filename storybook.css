@@ -68,3 +68,14 @@ html[data-color-theme=dark] :is(.interests-panel,.story-panel,.interest-card,.co
 html[data-color-theme=dark] :is(.interests-intro,.interest-card p,.story-copy,.career-step>p:last-child,.career-step .career-when,.family-facts strong,.contact-detail,.music-mini-title){color:#cbd6c3}
 html[data-color-theme=dark] :is(.career-current h3,.interest-card h3){color:#f0eee2}
 html[data-color-theme=dark] :is(.contact-logo,.music-toggle,.music-mini-close){background:#2a453c;color:#e4ead7}
+/* Theme-aware portrait captions, pop-ups and contact icons, including late CMS renders. */
+html[data-color-theme=dark] :is(.meet-version,.meet-version>span:last-child,.contact-circle-card strong,.contact-circle-card small){color:#edf0df!important}
+html[data-color-theme=dark] .meet-circle{background:#304a40!important;border-color:#78917b!important;color:#eef0df!important}
+html[data-color-theme=dark] #meet-version-dialog{background:#203333;color:#edf0df;border-color:#8da382}
+html[data-color-theme=dark] #meet-version-dialog :is(h2,p){color:#edf0df}
+html[data-color-theme=dark] .meet-close{background:#345045;color:#edf0df;border-color:#8da382}
+html[data-color-theme=dark] .contact-logo{background:#edf0e1!important;border-color:#a8bca0!important;color:#2c4e3c!important}
+html[data-color-theme=dark] .contact-logo[data-app=instagram]{color:#9b3264!important}
+html[data-color-theme=dark] :is(.contact-logo[data-app=linkedin],.contact-logo[data-app=facebook]){color:#185b91!important}
+html[data-color-theme=dark] .contact-logo[data-app=snapchat]{background:#fff2a2!important;color:#25352b!important}
+html[data-color-theme=dark] .contact-logo img{background:#edf0e1;border-radius:5px}
