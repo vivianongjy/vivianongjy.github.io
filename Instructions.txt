@@ -1,10 +1,26 @@
-LIGHT / DARK MODE
+BUISNESS SECTION — EMPTY SHOP SETUP
 
-Upload storybook.css and storybook.js from this folder to your GitHub repository root:
+Upload all seven website files in this folder to the root of:
 https://github.com/vivianongjy/vivianongjy.github.io/upload/main
+Commit, wait for GitHub Pages publishing, then refresh.
 
-Commit the changes, wait for GitHub Pages to finish publishing, then refresh your website.
-The new Light mode / Dark mode button floats above Owner edit and Pause scenery.
-It works across the homepage, Personal, Family, Friends, Career and Connect pages.
-A visitor's first appearance follows their device theme; their button choice is remembered.
-Only these two files are needed. Your photos, posts, backgrounds and page settings remain in place.
+Buisness appears after Career on all pages. Open /business.html.
+Use Owner edit with your existing repository access key:
+- Add product: name, description, price, category and photo.
+- Shop settings: currency, inquiry email, delivery and return terms.
+- Shop settings also lists all products, including hidden products, for editing.
+- Apply changes previews them. Save changes publishes to GitHub.
+
+Order inquiries start CLOSED. Add your actual seller contact, delivery information
+and return terms, then choose Yes under Accept email order inquiries and save.
+Customers can build a basket and open an email inquiry. No payment is collected,
+no order is confirmed automatically, and no stock is reserved. Confirm final
+availability, delivery, taxes and payment arrangements directly with the buyer.
+
+This version does not have online card payments, automatic shipping labels,
+real-time inventory, order confirmations or a private order database. Those
+require choosing and connecting a commerce/payment service.
+
+No existing posts, photos or other page content JSON needs to be replaced.
+Includes the pending light/dark mode update.
+Do not re-upload business-content.json after adding real products: it is your live catalogue.

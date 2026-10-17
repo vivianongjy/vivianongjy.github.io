@@ -61,3 +61,5 @@ document.addEventListener('visibilitychange',updatePageVisibility);updatePageVis
  window.addEventListener('storage',event=>{if(event.key!==key)return;chosen=['dark','light'].includes(event.newValue)?event.newValue:null;apply(chosen||(system.matches?'dark':'light'));});
  apply(chosen||(system.matches?'dark':'light'));document.body.append(control);
 })();
+
+for(const nav of document.querySelectorAll('header nav,.chapter-nav')){if(nav.querySelector('a[href="/business.html"]'))continue;const career=[...nav.querySelectorAll('a')].find(a=>/\/career(?:\.html)?(?:#.*)?$/.test(a.getAttribute('href')||''));if(career){const link=document.createElement('a');link.href='/business.html';link.textContent='Buisness';if(document.body.dataset.category==='business')link.setAttribute('aria-current','page');career.after(link);}}

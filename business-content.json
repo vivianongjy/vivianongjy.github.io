@@ -1,0 +1,16 @@
+{
+  "opacity": 55,
+  "background": "/world-background.jpg",
+  "text": {
+    "shop-title": "Buisness",
+    "intro": "Thoughtful finds, little creations, and things worth sharing."
+  },
+  "products": [],
+  "shop": {
+    "currency": "USD",
+    "email": "",
+    "ordersOpen": false,
+    "delivery": "",
+    "returns": ""
+  }
+}
