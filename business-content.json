@@ -14,9 +14,13 @@
       "description": "sample",
       "price": 2000,
       "category": "sample",
-      "image": "",
+      "image": "/uploads/afa87934-9bcd-4b48-a687-925104f82f7c.jpg",
       "visible": true,
-      "soldOut": false
+      "soldOut": false,
+      "images": [
+        "/uploads/e3cb15ef-2594-4b68-acff-d618af122271.jpg"
+      ],
+      "model": ""
     }
   ],
   "shop": {
