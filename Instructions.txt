@@ -1,10 +1,10 @@
-FLOATING OWNER EDIT
+LIGHT / DARK MODE
 
-Upload cms-content.js from this folder to your GitHub repository root:
+Upload storybook.css and storybook.js from this folder to your GitHub repository root:
 https://github.com/vivianongjy/vivianongjy.github.io/upload/main
-Commit, wait for GitHub Pages publishing to finish, and refresh the site.
 
-Owner edit now stays fixed near the bottom-right, above Pause scenery, while you scroll.
-The footer contains only © 2026 Vivian Ong and From Malaysia, with love. Based in NYC., with the location note aligned right.
-Owner sign-in and editing still work as before. When Edit mode is active, its fixed editing toolbar replaces the floating entry button.
-No content JSON, images, layouts, or credentials are replaced by this update.
+Commit the changes, wait for GitHub Pages to finish publishing, then refresh your website.
+The new Light mode / Dark mode button floats above Owner edit and Pause scenery.
+It works across the homepage, Personal, Family, Friends, Career and Connect pages.
+A visitor's first appearance follows their device theme; their button choice is remembered.
+Only these two files are needed. Your photos, posts, backgrounds and page settings remain in place.

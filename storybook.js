@@ -48,3 +48,16 @@ if ('IntersectionObserver' in window) {
 }
 function updatePageVisibility(){document.documentElement.toggleAttribute('data-page-hidden',document.hidden);}
 document.addEventListener('visibilitychange',updatePageVisibility);updatePageVisibility();
+
+// Visitor appearance preference is separate from owner editing and shared content.
+(() => {
+ const root=document.documentElement,key='vivian-color-theme';
+ const system=window.matchMedia('(prefers-color-scheme: dark)');
+ let chosen=null;try{const saved=localStorage.getItem(key);if(saved==='dark'||saved==='light')chosen=saved;}catch{}
+ const control=document.createElement('button');control.type='button';control.className='theme-toggle';
+ function apply(theme){root.dataset.colorTheme=theme;control.textContent=theme==='dark'?'☀ Light mode':'☾ Dark mode';control.setAttribute('aria-label',theme==='dark'?'Switch to light mode':'Switch to dark mode');control.setAttribute('aria-pressed',String(theme==='dark'));}
+ control.addEventListener('click',()=>{chosen=root.dataset.colorTheme==='dark'?'light':'dark';apply(chosen);try{localStorage.setItem(key,chosen);}catch{}});
+ system.addEventListener('change',event=>{if(!chosen)apply(event.matches?'dark':'light');});
+ window.addEventListener('storage',event=>{if(event.key!==key)return;chosen=['dark','light'].includes(event.newValue)?event.newValue:null;apply(chosen||(system.matches?'dark':'light'));});
+ apply(chosen||(system.matches?'dark':'light'));document.body.append(control);
+})();

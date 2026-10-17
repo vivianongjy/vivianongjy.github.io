@@ -43,3 +43,28 @@ header,footer{background:var(--panel-cream)}
 /* Skip paint work for decorative scenes outside the viewport. */
 .chapter-animation[data-offscreen] *, .world-sky[data-offscreen] *{animation-play-state:paused!important}
 html[data-page-hidden] .chapter-animation *,html[data-page-hidden] .world-sky *{animation-play-state:paused!important}
+
+/* Visitor light/dark appearance, shared by every chapter. */
+.theme-toggle{position:fixed;right:18px;bottom:110px;z-index:6;font:12px 'DM Sans',system-ui,sans-serif;border:1px solid #b4c0a4;background:#fffaf0ed;color:#3c593f;box-shadow:0 3px 15px #314b351a;border-radius:30px;padding:10px 15px;min-height:38px;cursor:pointer}.theme-toggle:focus-visible{outline:3px solid #b88636;outline-offset:3px}
+html[data-color-theme=dark]{color-scheme:dark;background:#142024;--paper:#192a2b;--ink:#f0eee2;--green:#a8c7aa;--line:#78917b66;--muted:#c2cebb;--panel-cream:rgb(24 40 42 / var(--panel-alpha,.55));--panel-green:rgb(32 53 45 / var(--panel-alpha,.55))}
+html[data-color-theme=dark] body{color:#f0eee2;background-color:transparent}
+html[data-color-theme=dark] body:before{filter:brightness(.38) saturate(.75)}
+html[data-color-theme=dark] body:after{background:linear-gradient(90deg,#0e1c2559,#0e1c2526,#0e1c2559)}
+html[data-color-theme=dark] :is(header,footer,.hero,.about,.journal,.connect,.chapter-intro,.section-card,.journal-card,.journal-empty,.life-stage,.contact-group){background-color:rgb(24 40 42 / var(--panel-alpha,.55))!important;color:#f0eee2;border-color:#9eb69a55}
+html[data-color-theme=dark] :is(.hero,.chapter-intro):before{background:none!important}
+html[data-color-theme=dark] :is(p,.intro,.body-copy,.hero .intro,.chapter-intro .intro,.journal-heading p,.connect p,.section-card p,.back-link,.section-number,.journal-meta,.journal-caption,.section-latest,.section-card-top,.section-count,.hero .caption,.fact small,.eyebrow,footer){color:#cbd6c3}
+html[data-color-theme=dark] :is(h1,h2,h3,.brand,.fact strong,header nav a){color:#f0eee2}
+html[data-color-theme=dark] :is(.travel-note,.hero .caption,.about-portrait,.journal-photos,.chapter-nav a,.socials a,.contact-circle,.meet-version-dialog,.music-mini-player){background:#263b36e8!important;color:#e6e9d8;border-color:#91aa8a66;text-shadow:none}
+html[data-color-theme=dark] :is(.travel-note small,.travel-note span,.hero .visual:before){color:#e2dbc5;text-shadow:none}
+html[data-color-theme=dark] :is(.button,.chapter-nav a[aria-current=page]){background:#466e58;color:#fff9eb}
+html[data-color-theme=dark] :is(.motion-toggle,.owner-edit-floating,.theme-toggle){background:#223a35f2;color:#e4ead7;border-color:#8fa68688}
+html[data-color-theme=dark] :is(.inline-owner-dialog,.inline-owner-toolbar,.deck-selection-tools,.deck-move-grip,.deck-rotate-grip){background:#203333;color:#f0eee2;border-color:#8da382}
+html[data-color-theme=dark] .inline-owner :is(button,input,textarea,select){background:#2c443c;color:#f0eee2;border-color:#8da382}
+html[data-color-theme=dark] .inline-owner-note{color:#cbd6c3}
+html[data-color-theme=dark] :is(input,textarea,select){color-scheme:dark}
+@media(max-width:620px){.theme-toggle{right:12px;bottom:104px;font-size:11px}}
+html[data-color-theme=dark]{--panel-inner:rgb(30 49 47 / var(--panel-alpha,.55))}
+html[data-color-theme=dark] :is(.interests-panel,.story-panel,.interest-card,.contact-circle-card,.music-mini-player){background-color:rgb(24 40 42 / var(--panel-alpha,.55))!important;color:#f0eee2;border-color:#9eb69a55}
+html[data-color-theme=dark] :is(.interests-intro,.interest-card p,.story-copy,.career-step>p:last-child,.career-step .career-when,.family-facts strong,.contact-detail,.music-mini-title){color:#cbd6c3}
+html[data-color-theme=dark] :is(.career-current h3,.interest-card h3){color:#f0eee2}
+html[data-color-theme=dark] :is(.contact-logo,.music-toggle,.music-mini-close){background:#2a453c;color:#e4ead7}
