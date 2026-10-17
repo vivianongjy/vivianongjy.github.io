@@ -3,16 +3,17 @@
   "background": "/world-background.jpg",
   "text": {
     "shop-title": "Buisness",
-    "intro": "Thoughtful finds, little creations, and things worth sharing."
+    "intro": "Thoughtful finds, little creations, and things worth sharing.",
+    "visual.main:1/div:2/article:1/div:2/small:1": "ho"
   },
   "products": [
     {
       "id": "0300006b-fd85-4a2f-84d4-2951b4a7121d",
       "sku": "",
-      "name": "album",
-      "description": "ho",
+      "name": "sample",
+      "description": "sample",
       "price": 2000,
-      "category": "ho",
+      "category": "sample",
       "image": "",
       "visible": true,
       "soldOut": false
