@@ -6,9 +6,9 @@
     if (!response.ok) throw new Error('Unable to load page content');
     const content = await response.json();
     window.vivianPageDesignContent = content;
+    if (page === 'personal') renderLifeStagePhotos(content);
     if (page === 'connect') renderConnectPage(content);
     renderPageMusic(content);
-    if (page === 'personal') renderLifeStagePhotos(content);
     if (page === 'home') renderHomePortrait(content);
     if (page === 'home') renderMeetVersions(content);
 
@@ -33,34 +33,6 @@
     console.warn('Showing the saved page while online content is unavailable.', error);
   }
 })();
-
-function renderLifeStagePhotos(content) {
-  const stages = { toddler: 'Toddler', kindergarten: 'Kindergarten', primary: 'Primary / Elementary School', 'high-school': 'High School', college: 'College', university: 'University' };
-  const style = document.createElement('style');
-  style.id = 'life-stage-photo-styles';
-  style.textContent = '.life-stage-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:0 0 24px}.life-stage-photos a{display:block;min-width:0;padding:9px;background:rgb(255 250 240 / var(--panel-alpha,.55));border:1px solid #d9d3be;border-radius:5px}.life-stage-photos img{width:100%;height:auto;max-height:480px;aspect-ratio:4/3;object-fit:contain;display:block;background:#e3e9d54d;border-radius:2px}.life-stage-photos a:only-child{max-width:650px;grid-column:1/-1}.life-stage-photos a:focus-visible{outline:3px solid #b88636;outline-offset:4px}@media(max-width:620px){.life-stage-photos{grid-template-columns:1fr;gap:12px}}';
-  document.getElementById('life-stage-photo-styles')?.remove();
-  document.head.append(style);
-  for (const [stage, label] of Object.entries(stages)) {
-    const section = document.getElementById('life-' + stage);
-    if (!section) continue;
-    section.querySelector('.life-stage-photos')?.remove();
-    const selected = content.stagePhotos?.[stage];
-    const photos = Array.isArray(selected) ? selected : typeof selected === 'string' && selected ? [selected] : [];
-    const gallery = document.createElement('div'); gallery.className = 'life-stage-photos';
-    gallery.setAttribute('role', 'group'); gallery.setAttribute('aria-label', label + ' photographs');
-    for (const [index, photo] of photos.entries()) {
-      if (typeof photo !== 'string' || !photo.trim()) continue;
-      let url; try { url = new URL(photo, window.location.origin); } catch { continue; }
-      if (!(['http:', 'https:'].includes(url.protocol) || isInlinePreviewUrl(url))) continue;
-      const link = document.createElement('a'); link.href = url.href; link.target = '_blank'; link.rel = 'noopener noreferrer';
-      link.setAttribute('aria-label', 'Open ' + label + ' photo ' + (index + 1));
-      const image = document.createElement('img'); image.src = url.href; image.alt = label + ' memory, photo ' + (index + 1); image.loading = 'lazy'; image.decoding = 'async';
-      link.append(image); gallery.append(link);
-    }
-    if (gallery.children.length) section.querySelector('[data-life-stage]')?.before(gallery);
-  }
-}
 
 function renderHomePortrait(content) {
   const about = document.querySelector('#about');
@@ -266,7 +238,6 @@ async function renderHomeConnect() {
     const content = await response.json();
     if (!Array.isArray(content.groups)) return;
     window.vivianContactDesignContent=content;
-    window.vivianContactDesignContent=content;
     const container = document.createElement('div'); container.id = 'home-contact-groups';
     renderConnectPage(content, container);
     const previous = section.querySelector('.socials, #home-contact-groups');
@@ -305,13 +276,40 @@ function isInlinePreviewUrl(url) { return document.documentElement.hasAttribute(
  entry.onclick=()=>{
    if(loaded){document.dispatchEvent(new Event('vivian-open-inline-editor'));return;}
    if(!document.querySelector('link[data-inline-editor-style]')){const style=document.createElement('link');style.rel='stylesheet';style.href='/inline-editor.css';style.dataset.inlineEditorStyle='';document.head.append(style);}
-   entry.disabled=true;const script=document.createElement('script');script.src='/inline-editor.js';script.onload=()=>{loaded=true;entry.disabled=false;};script.onerror=()=>{entry.disabled=false;script.remove();alert('The page editor could not load. Refresh and try again.');};document.head.append(script);
+   entry.disabled=true;const script=document.createElement('script');script.src='/inline-editor.js?v=20261017-photo-upload-fix';script.onload=()=>{loaded=true;entry.disabled=false;};script.onerror=()=>{entry.disabled=false;script.remove();alert('The page editor could not load. Refresh and try again.');};document.head.append(script);
  };document.body.append(entry);
 })();
 
 
 
 
+function renderLifeStagePhotos(content) {
+  const stages = { toddler: 'Toddler', kindergarten: 'Kindergarten', primary: 'Primary / Elementary School', 'high-school': 'High School', college: 'College', university: 'University' };
+  const style = document.createElement('style');
+  style.id = 'life-stage-photo-styles';
+  style.textContent = '.life-stage-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:0 0 24px}.life-stage-photos a{display:block;min-width:0;padding:9px;background:rgb(255 250 240 / var(--panel-alpha,.55));border:1px solid #d9d3be;border-radius:5px}.life-stage-photos img{width:100%;height:auto;max-height:480px;aspect-ratio:4/3;object-fit:contain;display:block;background:#e3e9d54d;border-radius:2px}.life-stage-photos a:only-child{max-width:650px;grid-column:1/-1}.life-stage-photos a:focus-visible{outline:3px solid #b88636;outline-offset:4px}@media(max-width:620px){.life-stage-photos{grid-template-columns:1fr;gap:12px}}';
+  document.getElementById('life-stage-photo-styles')?.remove();
+  document.head.append(style);
+  for (const [stage, label] of Object.entries(stages)) {
+    const section = document.getElementById('life-' + stage);
+    if (!section) continue;
+    section.querySelector('.life-stage-photos')?.remove();
+    const selected = content.stagePhotos?.[stage];
+    const photos = Array.isArray(selected) ? selected : typeof selected === 'string' && selected ? [selected] : [];
+    const gallery = document.createElement('div'); gallery.className = 'life-stage-photos';
+    gallery.setAttribute('role', 'group'); gallery.setAttribute('aria-label', label + ' photographs');
+    for (const [index, photo] of photos.entries()) {
+      if (typeof photo !== 'string' || !photo.trim()) continue;
+      let url; try { url = new URL(photo, window.location.origin); } catch { continue; }
+      if (!(['http:', 'https:'].includes(url.protocol) || isInlinePreviewUrl(url))) continue;
+      const link = document.createElement('a'); link.href = url.href; link.target = '_blank'; link.rel = 'noopener noreferrer';
+      link.setAttribute('aria-label', 'Open ' + label + ' photo ' + (index + 1));
+      const image = document.createElement('img'); image.src = url.href; image.alt = label + ' memory, photo ' + (index + 1); image.loading = 'lazy'; image.decoding = 'async';
+      link.append(image); gallery.append(link);
+    }
+    if (gallery.children.length) section.querySelector('[data-life-stage]')?.before(gallery);
+  }
+}
 
 
 // Saved page appearance uses validated values, never custom HTML or arbitrary CSS.
@@ -395,5 +393,6 @@ function renderDeckObjects(content){
 }
 function applyDeckTransforms(content){for(const el of document.querySelectorAll('[data-position-key]')){const value=content.appearance?.transforms?.[el.dataset.positionKey];if(value){if(getComputedStyle(el).display==='inline'){el.style.display='inline-block';el.dataset.ownerTransformDisplay='';}el.style.rotate=designNumber(value.rotation,-180,180,0)+'deg';el.style.transform='none';}else if(el.hasAttribute('data-owner-rotation')){el.style.removeProperty('rotate');el.style.removeProperty('transform');}el.toggleAttribute('data-owner-rotation',Boolean(value));}}
 
-
-let designRefreshPending=false;new MutationObserver(records=>{if(document.documentElement.hasAttribute('data-inline-editing')||designRefreshPending||!window.vivianPageDesignContent)return;if(!records.some(record=>record.type==='childList'&&[...record.addedNodes].some(node=>node.nodeType===1&&!node.closest?.('.inline-owner')&&node.tagName!=='STYLE')))return;designRefreshPending=true;requestAnimationFrame(()=>{designRefreshPending=false;applyPageDesign(window.vivianPageDesignContent);});}).observe(document.body,{childList:true,subtree:true});
+// Refresh saved design after asynchronous galleries or contacts render.
+let designRefreshPending=false;
+new MutationObserver(records=>{if(document.documentElement.hasAttribute('data-inline-editing')||designRefreshPending||!window.vivianPageDesignContent)return;if(!records.some(record=>record.type==='childList'&&[...record.addedNodes].some(node=>node.nodeType===1&&!node.closest?.('.inline-owner')&&node.tagName!=='STYLE')))return;designRefreshPending=true;requestAnimationFrame(()=>{designRefreshPending=false;applyPageDesign(window.vivianPageDesignContent);});}).observe(document.body,{childList:true,subtree:true});

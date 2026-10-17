@@ -1,0 +1,6 @@
+heic-to 1.6.6, unmodified browser module.
+License: LGPL-3.0; included in heic-to-LICENSE.txt.
+Project and source: https://github.com/hoppergee/heic-to
+Original package: https://registry.npmjs.org/heic-to/-/heic-to-1.6.6.tgz
+Embedded decoder: libheif 1.23.6, https://github.com/strukturag/libheif/tree/v1.23.6
+This module is loaded separately and may be replaced with a compatible modified module at the same URL.
