@@ -5,7 +5,19 @@
     "shop-title": "Buisness",
     "intro": "Thoughtful finds, little creations, and things worth sharing."
   },
-  "products": [],
+  "products": [
+    {
+      "id": "0300006b-fd85-4a2f-84d4-2951b4a7121d",
+      "sku": "",
+      "name": "album",
+      "description": "ho",
+      "price": 2000,
+      "category": "ho",
+      "image": "",
+      "visible": true,
+      "soldOut": false
+    }
+  ],
   "shop": {
     "currency": "USD",
     "email": "",
