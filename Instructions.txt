@@ -1,37 +1,16 @@
-SHOP + DARK MODE + EDITOR FIXES
+PUBLIC SHOP DISPLAY / SAVE & EXIT
 
-Upload the seven website files from this folder to your GitHub repository root:
+Upload shop.js and inline-editor.js to the root of your GitHub repository:
 https://github.com/vivianongjy/vivianongjy.github.io/upload/main
-Commit the changes, wait for GitHub Pages to finish publishing, then refresh.
+Commit and wait for GitHub Pages to publish. Refresh business.html.
 
-This update does not include business-content.json, so existing products and shop
-settings are preserved. If you have never installed the shop, first install the
-business-section-update package, then upload this update. Never replace your live
-business-content.json with the empty starter after adding products.
+Do not upload or replace business-content.json. Your existing products are preserved.
 
-DARK MODE
-Portrait circle captions, placeholder numbers, pop-up messages and contact labels
-now follow the theme. Contact logos use a light badge for readable brand colors,
-including custom uploaded logos. Switching back restores light-mode styling.
+After adding or editing products, set availability to Available, Apply product,
+then Save & exit. This saves pending changes before leaving. If GitHub rejects
+saving, Edit mode stays open with the draft and error message.
 
-OWNER EDIT
-Selected item controls now appear at the top, away from the bottom edit toolbar.
-They wrap on mobile and hide while an editing dialog is open.
-
-HOW TO ADD PRODUCTS
-1. Open business.html and press Owner edit. Sign in using your existing owner key.
-2. Your shop desk appears above the search bar. Open Shop settings first.
-3. Select your currency. Add an inquiry email, delivery regions/cost/timing and
-   your return/cancellation terms. Keep inquiries closed while preparing.
-4. Press Add product. Enter its name, price (e.g. 24.50), description, collection,
-   optional SKU/product reference, photo, and availability.
-5. Press Apply product to preview. Repeat for more products.
-6. Press Save changes in the bottom toolbar to save to GitHub. Wait for Pages
-   publishing, then refresh to verify the visitor view.
-7. Edit products from the shop desk list, including hidden and sold-out products.
-8. When ready, open Shop settings, enable email order inquiries, Apply and Save.
-
-A basket inquiry opens the customer's email app. It does not take payment,
-reserve stock, confirm an order, or send email without the customer sending it.
-Online card checkout, automated taxes/shipping and order management still require
-choosing and connecting a commerce/payment provider.
+Public visitors get a fresh catalogue request when opening the page, returning
+to it or pressing Refresh shop. GitHub Pages still needs time to publish commits.
+Available and sold-out products appear publicly; Hidden products stay owner-only.
+Order inquiries can stay closed while the public catalogue is visible.
