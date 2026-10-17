@@ -1,16 +1,35 @@
-PUBLIC SHOP DISPLAY / SAVE & EXIT
+YOUR VENMO + TOUCH ’N GO QR IMAGES
 
-Upload shop.js and inline-editor.js to the root of your GitHub repository:
+Upload the FIVE website files from this folder to the root of:
 https://github.com/vivianongjy/vivianongjy.github.io/upload/main
-Commit and wait for GitHub Pages to publish. Refresh business.html.
+Commit, wait for GitHub Pages publishing, then refresh business.html.
+Do not replace business-content.json: your products and settings remain intact.
 
-Do not upload or replace business-content.json. Your existing products are preserved.
+VENMO — USD
+Recipient: Vivian Jing Yi Ong
+Profile: https://venmo.com/u/VivianJingYi-Ong
+QR asset: venmo-payment-qr.png
+The image was extracted from the PDF's original embedded image pixels.
 
-After adding or editing products, set availability to Available, Apply product,
-then Save & exit. This saves pending changes before leaving. If GitHub rejects
-saving, Edit mode stays open with the draft and error message.
+TOUCH ’N GO / DUITNOW — MYR
+Recipient: TAN SOR GUAN (confirmed by you)
+QR asset: tng-payment-qr.jpg
+Your original JPEG has been copied unchanged. No payment link was guessed from
+the phone number and no new payment QR was generated.
 
-Public visitors get a fresh catalogue request when opening the page, returning
-to it or pressing Refresh shop. GitHub Pages still needs time to publish commits.
-Available and sold-out products appear publicly; Hidden products stay owner-only.
-Order inquiries can stay closed while the public catalogue is visible.
+Both methods are supplied as defaults. Existing saved payment settings take
+precedence, including an explicitly disabled method. If an option is disabled,
+open Owner edit > Payment options, enable it, Apply payment options, Save & exit.
+You can replace or remove either image through that same panel.
+
+Payment QR and links are shown for the shop's current currency. The other
+method is labelled with its required currency and asks the customer to obtain
+a quote before paying. There is no automatic USD/MYR conversion.
+
+Customers should inquire first and wait for final order confirmation. The full
+QR image can be opened separately for scanning, saving or importing in the
+payment app. Check the recipient and confirmed amount in the payment app.
+Verify received funds yourself, then mark the order Paid in Shop Desk.
+
+Installing this update does not send money, automatically verify payments,
+send notification emails or connect automatic order capture.
